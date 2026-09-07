@@ -1,0 +1,10 @@
+<!ELEMENT archivio_faq (faq*)>
+<!ELEMENT faq (domanda, risposta, id_post_origine?, autore_inserimento, data_pubblicazione)>
+<!ATTLIST faq 
+    id ID #REQUIRED
+    provenienza (manuale | elevata) #REQUIRED>
+<!ELEMENT domanda (#PCDATA)>
+<!ELEMENT risposta (#PCDATA)>
+<!ELEMENT id_post_origine (#PCDATA)>
+<!ELEMENT autore_inserimento (#PCDATA)>
+<!ELEMENT data_pubblicazione (#PCDATA)>

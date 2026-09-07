@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sistema_transazioni SYSTEM "transazioni.dtd">
+<sistema_transazioni>
+  <conti_clienti>
+    <conto id_cliente="3">
+      <saldo_crediti>205</saldo_crediti>
+      <totale_speso>120.00</totale_speso>
+    </conto>
+    <conto id_cliente="4">
+      <saldo_crediti>0</saldo_crediti>
+      <totale_speso>200</totale_speso>
+    </conto>
+  </conti_clienti>
+  <richieste_ricarica>
+    <richiesta id_richiesta="RIC1787415202" id_cliente="3" stato="approvata">
+      <crediti_richiesti>100</crediti_richiesti>
+      <data_richiesta>2026-08-22T18:13:22</data_richiesta>
+      <data_gestione>2026-08-22T18:22:45</data_gestione>
+    </richiesta>
+    <richiesta id_richiesta="RIC1787415737" id_cliente="3" stato="approvata">
+      <crediti_richiesti>50</crediti_richiesti>
+      <data_richiesta>2026-08-22T18:22:17</data_richiesta>
+      <data_gestione>2026-08-22T18:22:50</data_gestione>
+    </richiesta>
+    <richiesta id_richiesta="RIC1787415743" id_cliente="3" stato="respinta">
+      <crediti_richiesti>70</crediti_richiesti>
+      <data_richiesta>2026-08-22T18:22:23</data_richiesta>
+      <data_gestione>2026-08-22T18:22:49</data_gestione>
+    </richiesta>
+    <richiesta id_richiesta="RIC1787416532" id_cliente="3" stato="approvata">
+      <crediti_richiesti>5</crediti_richiesti>
+      <data_richiesta>2026-08-22T18:35:32</data_richiesta>
+      <data_gestione>2026-08-22T18:35:46</data_gestione>
+    </richiesta>
+    <richiesta id_richiesta="RIC1787416565" id_cliente="4" stato="approvata">
+      <crediti_richiesti>100</crediti_richiesti>
+      <data_richiesta>2026-08-22T18:36:05</data_richiesta>
+      <data_gestione>2026-08-22T18:36:32</data_gestione>
+    </richiesta>
+    <richiesta id_richiesta="RIC1787582511" id_cliente="4" stato="approvata">
+      <crediti_richiesti>100</crediti_richiesti>
+      <data_richiesta>2026-08-24T16:41:51</data_richiesta>
+      <data_gestione>2026-08-24T16:42:00</data_gestione>
+    </richiesta>
+    <richiesta id_richiesta="RIC1787582853" id_cliente="4" stato="approvata">
+      <crediti_richiesti>200</crediti_richiesti>
+      <data_richiesta>2026-08-24T16:47:33</data_richiesta>
+      <data_gestione>2026-08-24T16:48:05</data_gestione>
+    </richiesta>
+  </richieste_ricarica>
+  <ordini>
+    <ordine id_ordine="ORD1787582903864" id_cliente="4">
+      <id_offerta>OFF05</id_offerta>
+      <crediti_pagati>35</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Profilo Predefinito</indirizzo_fatturazione>
+      <data_ordine>2026-08-24T16:48:23</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1787592464681" id_cliente="4">
+      <id_offerta>OFF02</id_offerta>
+      <crediti_pagati>120</crediti_pagati>
+      <bonus_ottenuto>15</bonus_ottenuto>
+      <indirizzo_fatturazione>Profilo Predefinito</indirizzo_fatturazione>
+      <data_ordine>2026-08-24T19:27:44</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1787592493935" id_cliente="4">
+      <id_offerta>OFF03</id_offerta>
+      <crediti_pagati>45</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Profilo Predefinito</indirizzo_fatturazione>
+      <data_ordine>2026-08-24T19:28:13</data_ordine>
+    </ordine>
+  </ordini>
+</sistema_transazioni>

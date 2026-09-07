@@ -1,0 +1,19 @@
+<!ELEMENT catalogo (offerta*)>
+<!ELEMENT offerta (titolo, descrizione, trainer, intensita, prezzo_crediti, disponibile, promozione*)>
+<!ATTLIST offerta 
+    id ID #REQUIRED
+    categoria (corso | abbonamento | lezione_privata) #REQUIRED>
+<!ELEMENT titolo (#PCDATA)>
+<!ELEMENT descrizione (#PCDATA)>
+<!ELEMENT trainer (#PCDATA)>
+<!ELEMENT intensita (#PCDATA)>
+<!ELEMENT prezzo_crediti (#PCDATA)>
+<!ELEMENT disponibile (#PCDATA)>
+<!ELEMENT promozione (tipo, valore, criterio_applicazione, data_inizio, data_fine)>
+<!ATTLIST promozione id_promo ID #REQUIRED>
+<!ELEMENT tipo (#PCDATA)>
+<!ELEMENT valore (#PCDATA)>
+<!ELEMENT criterio_applicazione (#PCDATA)>
+<!ATTLIST criterio_applicazione tipo_criterio (anzianita | spesa_pregressa | reputazione | indiscriminato) #REQUIRED>
+<!ELEMENT data_inizio (#PCDATA)>
+<!ELEMENT data_fine (#PCDATA)>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalogo SYSTEM "catalogo.dtd">
+<catalogo>
+    <offerta id="OFF01" categoria="corso">
+        <titolo>Corso Avanzato Calisthenics</titolo>
+        <descrizione>Corso intensivo di ginnastica a corpo libero per atleti intermedi e avanzati con progressioni su anelli e sbarra.</descrizione>
+        <trainer>Marco Trainer</trainer>
+        <intensita>alta</intensita>
+        <prezzo_crediti>60</prezzo_crediti>
+        <disponibile>true</disponibile>
+        <promozione id_promo="PR01">
+            <tipo>sconto</tipo>
+            <valore>20</valore>
+            <criterio_applicazione tipo_criterio="indiscriminato">tutti</criterio_applicazione>
+            <data_inizio>2026-08-01</data_inizio>
+            <data_fine>2026-09-30</data_fine>
+        </promozione>
+    </offerta>
+
+    <offerta id="OFF02" categoria="abbonamento">
+        <titolo>Abbonamento Open Sala Pesi 3 Mesi</titolo>
+        <descrizione>Accesso completo e illimitato alla sala pesi, area cardio e spogliatoi con armadietto riservato per un trimestre.</descrizione>
+        <trainer>Andrea Trainer</trainer>
+        <intensita>media</intensita>
+        <prezzo_crediti>120</prezzo_crediti>
+        <disponibile>true</disponibile>
+        <promozione id_promo="PR02">
+            <tipo>bonus</tipo>
+            <valore>15</valore>
+            <criterio_applicazione tipo_criterio="indiscriminato">tutti</criterio_applicazione>
+            <data_inizio>2026-08-01</data_inizio>
+            <data_fine>2026-10-15</data_fine>
+        </promozione>
+    </offerta>
+
+    <offerta id="OFF03" categoria="corso">
+        <titolo>Posturale &amp; Mobilità Articolare</titolo>
+        <descrizione>Esercizi a basso impatto mirati al riallineamento posturale, flessibilità della colonna e prevenzione infortuni.</descrizione>
+        <trainer>Sara Trainer</trainer>
+        <intensita>bassa</intensita>
+        <prezzo_crediti>45</prezzo_crediti>
+        <disponibile>true</disponibile>
+    </offerta>
+
+    <offerta id="OFF04" categoria="lezione_privata">
+        <titolo>Personal Training 1-to-1 (Pacchetto 5 Sessioni)</titolo>
+        <descrizione>Coaching personalizzato individuale con scheda tecnica su misura e monitoraggio dei parametri fisici.</descrizione>
+        <trainer>Marco Trainer</trainer>
+        <intensita>alta</intensita>
+        <prezzo_crediti>150</prezzo_crediti>
+        <disponibile>true</disponibile>
+    </offerta>
+
+    <offerta id="OFF05" categoria="corso">
+        <titolo>Corso di Yoga &amp; Respirazione</titolo>
+        <descrizione>Lezioni per il rilassamento muscolare e la gestione dello stress.</descrizione>
+        <trainer>Sara Trainer</trainer>
+        <intensita>bassa</intensita>
+        <prezzo_crediti>35</prezzo_crediti>
+        <disponibile>true</disponibile>
+    </offerta>
+
+</catalogo>
