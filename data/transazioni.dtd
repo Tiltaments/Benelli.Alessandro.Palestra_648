@@ -1,0 +1,27 @@
+<!ELEMENT sistema_transazioni (conti_clienti, richieste_ricarica, ordini)>
+<!ELEMENT conti_clienti (conto*)>
+<!ELEMENT conto (saldo_crediti, totale_speso)>
+<!ATTLIST conto id_cliente CDATA #REQUIRED>
+<!ELEMENT saldo_crediti (#PCDATA)>
+<!ELEMENT totale_speso (#PCDATA)>
+
+<!ELEMENT richieste_ricarica (richiesta*)>
+<!ELEMENT richiesta (crediti_richiesti, data_richiesta, data_gestione?)>
+<!ATTLIST richiesta 
+    id_richiesta ID #REQUIRED
+    id_cliente CDATA #REQUIRED
+    stato (in_attesa | approvata | respinta) #REQUIRED>
+<!ELEMENT crediti_richiesti (#PCDATA)>
+<!ELEMENT data_richiesta (#PCDATA)>
+<!ELEMENT data_gestione (#PCDATA)>
+
+<!ELEMENT ordini (ordine*)>
+<!ELEMENT ordine (id_offerta, crediti_pagati, bonus_ottenuto, indirizzo_fatturazione, data_ordine)>
+<!ATTLIST ordine 
+    id_ordine ID #REQUIRED
+    id_cliente CDATA #REQUIRED>
+<!ELEMENT id_offerta (#PCDATA)>
+<!ELEMENT crediti_pagati (#PCDATA)>
+<!ELEMENT bonus_ottenuto (#PCDATA)>
+<!ELEMENT indirizzo_fatturazione (#PCDATA)>
+<!ELEMENT data_ordine (#PCDATA)>

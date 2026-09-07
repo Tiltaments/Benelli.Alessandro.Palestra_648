@@ -1,0 +1,22 @@
+<!ELEMENT community (contributo*)>
+<!ELEMENT contributo (id_autore, data_creazione, testo, valutazioni?, risposte?)>
+<!ATTLIST contributo 
+    id_post ID #REQUIRED
+    id_offerta CDATA #REQUIRED
+    tipo (recensione | domanda) #REQUIRED
+    acquisto_verificato (true | false) #REQUIRED>
+<!ELEMENT id_autore (#PCDATA)>
+<!ELEMENT data_creazione (#PCDATA)>
+<!ELEMENT testo (#PCDATA)>
+
+<!ELEMENT valutazioni (valutazione*)>
+<!ELEMENT valutazione (supporto, utilita)>
+<!ATTLIST valutazione 
+    id_votante CDATA #REQUIRED
+    ruolo_votante (cliente | gestore) #REQUIRED>
+<!ELEMENT supporto (#PCDATA)>
+<!ELEMENT utilita (#PCDATA)>
+
+<!ELEMENT risposte (risposta*)>
+<!ELEMENT risposta (id_autore, data_creazione, testo, valutazioni?)>
+<!ATTLIST risposta id_risposta ID #REQUIRED>

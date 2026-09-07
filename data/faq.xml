@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE archivio_faq SYSTEM "faq.dtd">
+<archivio_faq>
+  <faq id="FAQ01" provenienza="manuale">
+    <domanda>Quali documenti servono per iscriversi in palestra?</domanda>
+    <risposta>È obbligatorio presentare un certificato medico per attività sportiva non agonistica in corso di validità e il codice fiscale.</risposta>
+    <autore_inserimento>gestore</autore_inserimento>
+    <data_pubblicazione>2026-08-01</data_pubblicazione>
+  </faq>
+  <faq id="FAQ1787598788" provenienza="manuale">
+    <domanda>Cosa è incluso negli abbonamenti?</domanda>
+    <risposta>Negli abbonamenti e nei corsi è incluso anche un asciugamano brandizzato e la possibilità di utilizzare un armadietto personale</risposta>
+    <autore_inserimento>admin</autore_inserimento>
+    <data_pubblicazione>2026-08-24</data_pubblicazione>
+  </faq>
+</archivio_faq>
