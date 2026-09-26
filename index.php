@@ -1,5 +1,5 @@
 <?php
-// index.php
+// index.php - Catalogo Corsi e Offerte della Palestra 648 con gestione promozioni e community
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/catalogo_service.php';
 
@@ -8,16 +8,13 @@ $ordinamento = $_GET['ordine'] ?? 'default';
 $offerte = caricaOfferteCatalogo($ordinamento);
 ?>
 
-
-
 <div class="card">
     <div class="catalogo-header">
         <div>
             <h1>🏋️ Catalogo Offerte &amp; Corsi</h1>
             <p style="color: #666; margin-top: 5px;">Scegli il tuo percorso di allenamento e consulta le promozioni attive.</p>
         </div>
-
-        <!-- Form Ordinamento (CU1) -->
+        <!-- Form Ordinamento -->
         <form method="GET" action="index.php" class="filtri-form">
             <label for="ordine"><strong>Ordina per:</strong></label>
             <select name="ordine" id="ordine" onchange="this.form.submit()">
@@ -34,36 +31,35 @@ $offerte = caricaOfferteCatalogo($ordinamento);
     <div class="grid-offerte">
         <?php foreach ($offerte as $corso): ?>
             <div class="offerta-card">
+                <!-- Zona Immagine -->
+                <div style="height: 150px; background-color: #eef2f7; background-image: url('<?= htmlspecialchars($corso['immagine']) ?>'); background-size: cover; background-position: center; border-radius: 4px; margin-bottom: 15px;"></div>
+
                 <div>
                     <span class="badge-categoria"><?= htmlspecialchars(str_replace('_', ' ', $corso['categoria'])) ?></span>
-
                     <?php if ($corso['sconto_percentuale'] > 0): ?>
-                        <span class="badge-promo">-<?= $corso['sconto_percentuale'] ?>% SCONTO</span>
+                        <span class="badge-promo">-<?= $corso['sconto_percentuale'] ?>% (<?= htmlspecialchars($corso['nome_promo']) ?>)</span>
                     <?php endif; ?>
-
                     <?php if ($corso['bonus_crediti'] > 0): ?>
-                        <span class="badge-bonus">+<?= $corso['bonus_crediti'] ?> CREDITI BONUS</span>
+                        <span class="badge-bonus">+<?= $corso['bonus_crediti'] ?> CR. (<?= htmlspecialchars($corso['nome_promo']) ?>)</span>
                     <?php endif; ?>
 
-                    <h2 style="margin-top: 5px;"><?= htmlspecialchars($corso['titolo']) ?></h2>
+                    <h2 style="margin-top: 10px; font-size: 18px;"><?= htmlspecialchars($corso['titolo']) ?></h2>
                     <p style="font-size: 13px; color: #555; margin: 8px 0;"><?= htmlspecialchars($corso['descrizione']) ?></p>
-
                     <p style="font-size: 12px; color: #777;">
-                        <strong>Trainer:</strong> <?= htmlspecialchars($corso['trainer']) ?><br>
+                        <strong>Trainer (Edizioni):</strong> <?= htmlspecialchars($corso['trainers']) ?><br>
                         <strong>Intensità:</strong> <span style="text-transform: capitalize;"><?= htmlspecialchars($corso['intensita']) ?></span>
                     </p>
                 </div>
 
-                <div>
-                    <div class="prezzo-container">
+                <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px;">
+                    <div class="prezzo-container" style="margin-top: 0;">
                         <?php if ($corso['sconto_percentuale'] > 0): ?>
-                            <span class="prezzo-vecchio"><?= $corso['prezzo_base'] ?> crediti</span>
+                            <span class="prezzo-vecchio"><?= $corso['prezzo_base'] ?> cr.</span>
                             <span class="prezzo-scontato"><?= $corso['prezzo_finale'] ?> crediti</span>
                         <?php else: ?>
                             <span class="prezzo-normale"><?= $corso['prezzo_base'] ?> crediti</span>
                         <?php endif; ?>
                     </div>
-
                     <?php if (getRuolo() === 'cliente'): ?>
                         <a href="dettaglio_corso.php?id=<?= urlencode($corso['id']) ?>" class="btn-dettaglio">Vedi &amp; Acquista</a>
                     <?php elseif (getRuolo() === 'visitatore'): ?>
@@ -76,7 +72,6 @@ $offerte = caricaOfferteCatalogo($ordinamento);
         <?php endforeach; ?>
     </div>
 </div>
-
 </div>
 </body>
 

@@ -1,5 +1,5 @@
 <?php
-// register.php
+// register.php - Pagina di Registrazione per la Palestra 648 con gestione della creazione account e inizializzazione del conto crediti
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/includes/auth.php';
 

@@ -1,0 +1,12 @@
+<!ELEMENT elenco_promozioni (promozione*)>
+<!ELEMENT promozione (titolo, tipo, valore, criterio_applicazione, data_inizio, data_fine, corsi_applicati)>
+<!ATTLIST promozione id_promo ID #REQUIRED>
+<!ELEMENT titolo (#PCDATA)>
+<!ELEMENT tipo (#PCDATA)>
+<!ELEMENT valore (#PCDATA)>
+<!ELEMENT criterio_applicazione (#PCDATA)>
+<!ATTLIST criterio_applicazione tipo_criterio (anzianita | spesa_pregressa | reputazione | indiscriminato) #REQUIRED>
+<!ELEMENT data_inizio (#PCDATA)>
+<!ELEMENT data_fine (#PCDATA)>
+<!ELEMENT corsi_applicati (id_corso+)>
+<!ELEMENT id_corso (#PCDATA)>

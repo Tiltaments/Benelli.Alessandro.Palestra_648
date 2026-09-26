@@ -1,5 +1,5 @@
 <?php
-
+// includes/header.php - Intestazione comune per tutte le pagine del portale Palestra 648
 require_once __DIR__ . '/auth.php';
 
 $ruolo = getRuolo();
@@ -1148,6 +1148,16 @@ $nomeUtente = $_SESSION['nome_completo'] ?? '';
             border-radius: 4px;
             margin-bottom: 15px;
         }
+
+        .alert-wip {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -1158,6 +1168,7 @@ $nomeUtente = $_SESSION['nome_completo'] ?? '';
         <ul class="navbar-nav">
             <!-- Voci comuni a tutti (Visitatore, Cliente, Gestore, Admin) -->
             <li><a href="index.php">Home / Corsi</a></li>
+            <li><a href="forum_generale.php">Forum</a></li>
             <li><a href="faq.php">FAQ</a></li>
 
             <?php if ($ruolo === 'visitatore'): ?>

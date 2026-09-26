@@ -50,21 +50,21 @@
   </richieste_ricarica>
   <ordini>
     <ordine id_ordine="ORD1787582903864" id_cliente="4">
-      <id_offerta>OFF05</id_offerta>
+      <id_corso>CRS01</id_corso>
       <crediti_pagati>35</crediti_pagati>
       <bonus_ottenuto>0</bonus_ottenuto>
       <indirizzo_fatturazione>Profilo Predefinito</indirizzo_fatturazione>
       <data_ordine>2026-08-24T16:48:23</data_ordine>
     </ordine>
     <ordine id_ordine="ORD1787592464681" id_cliente="4">
-      <id_offerta>OFF02</id_offerta>
+      <id_corso>CRS02</id_corso>
       <crediti_pagati>120</crediti_pagati>
       <bonus_ottenuto>15</bonus_ottenuto>
       <indirizzo_fatturazione>Profilo Predefinito</indirizzo_fatturazione>
       <data_ordine>2026-08-24T19:27:44</data_ordine>
     </ordine>
     <ordine id_ordine="ORD1787592493935" id_cliente="4">
-      <id_offerta>OFF03</id_offerta>
+      <id_corso>CRS03</id_corso>
       <crediti_pagati>45</crediti_pagati>
       <bonus_ottenuto>0</bonus_ottenuto>
       <indirizzo_fatturazione>Profilo Predefinito</indirizzo_fatturazione>

@@ -1,7 +1,9 @@
 <?php
-// admin_faq.php - Gestione FAQ ed Elevazione (CU10)
+// admin_faq.php - Pannello di Gestione FAQ Ufficiali per Admin e Gestori con possibilità di inserimento manuale o elevazione da domande della community
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/header.php';
+require_once __DIR__ . '/includes/catalogo_service.php';
+$offerte = caricaOfferteCatalogo();
 
 // SICUREZZA: Solo l'amministratore o il gestore possono accedere
 richiediRuolo(['admin', 'gestore']);
@@ -32,6 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $nuovaFaq->setAttribute('provenienza', 'manuale');
 
                     $nuovaFaq->appendChild($dom->createElement('domanda', $testoDomanda));
+                    if (!empty($_POST['etichetta_corso'])) {
+                        $nuovaFaq->appendChild($dom->createElement('etichetta_corso', $_POST['etichetta_corso']));
+                    }
                     $nuovaFaq->appendChild($dom->createElement('risposta', $testoRisposta));
                     $nuovaFaq->appendChild($dom->createElement('autore_inserimento', getRuolo()));
                     $nuovaFaq->appendChild($dom->createElement('data_pubblicazione', date('Y-m-d')));
@@ -81,6 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $nuovaFaq->setAttribute('provenienza', 'elevata');
 
                         $nuovaFaq->appendChild($domFaq->createElement('domanda', $testoDomanda));
+                        if (!empty($_POST['etichetta_corso'])) {
+                            $nuovaFaq->appendChild($domFaq->createElement('etichetta_corso', $_POST['etichetta_corso']));
+                        }
                         $nuovaFaq->appendChild($domFaq->createElement('risposta', $testoRisposta));
                         $nuovaFaq->appendChild($domFaq->createElement('id_post_origine', $idPostOrigine));
                         $nuovaFaq->appendChild($domFaq->createElement('autore_inserimento', getRuolo()));
@@ -124,7 +132,7 @@ if (file_exists($xmlFaq)) {
     }
 }
 
-// B) Leggiamo le domande dalla community (da elevare) tramite la tua query XPath!
+// B) Leggiamo le domande dalla community (da elevare) tramite la query XPath
 $domandeCommunity = [];
 if (file_exists($xmlCommunity)) {
     $domComm = new DOMDocument();
@@ -163,6 +171,15 @@ if (file_exists($xmlCommunity)) {
         <form method="POST" action="admin_faq.php">
             <input type="hidden" name="azione" value="inserisci_manuale">
             <div class="form-group">
+                <label>Etichetta Corso (Opzionale):</label>
+                <select name="etichetta_corso">
+                    <option value="Generale">Interesse Generale</option>
+                    <?php foreach ($offerte as $o): ?>
+                        <option value="<?= htmlspecialchars($o['titolo']) ?>"><?= htmlspecialchars($o['titolo']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
                 <label>Testo della Domanda:</label>
                 <input type="text" name="domanda" placeholder="Es. Serve il certificato medico?" required>
             </div>
@@ -179,6 +196,15 @@ if (file_exists($xmlCommunity)) {
         <h2 style="margin-bottom: 15px; font-size: 18px;">🚀 Eleva dalla Community</h2>
         <form method="POST" action="admin_faq.php">
             <input type="hidden" name="azione" value="eleva_domanda">
+            <div class="form-group">
+                <label>Etichetta Corso (Opzionale):</label>
+                <select name="etichetta_corso">
+                    <option value="Generale">Interesse Generale</option>
+                    <?php foreach ($offerte as $o): ?>
+                        <option value="<?= htmlspecialchars($o['titolo']) ?>"><?= htmlspecialchars($o['titolo']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
             <div class="form-group">
                 <label>Scegli una Domanda Utente:</label>
                 <select name="id_post_origine" required>

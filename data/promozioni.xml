@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE elenco_promozioni SYSTEM "promozioni.dtd">
+<elenco_promozioni>
+    <promozione id_promo="PR_LANCIO">
+        <titolo>Sconto Lancio</titolo>
+        <tipo>sconto</tipo>
+        <valore>15</valore>
+        <criterio_applicazione tipo_criterio="indiscriminato">tutti</criterio_applicazione>
+        <data_inizio>2026-08-01</data_inizio>
+        <data_fine>2026-10-31</data_fine>
+        <corsi_applicati>
+            <id_corso>CRS01</id_corso>
+            <id_corso>CRS03</id_corso>
+        </corsi_applicati>
+    </promozione>
+    <promozione id_promo="PR_ANNIVERSARIO">
+        <titolo>Promozione Anniversario</titolo>
+        <tipo>sconto</tipo>
+        <valore>25</valore>
+        <criterio_applicazione tipo_criterio="anzianita">clienti con almeno 1 anno di iscrizione</criterio_applicazione>
+        <data_inizio>2026-09-25</data_inizio>
+        <data_fine>2026-09-30</data_fine>
+        <corsi_applicati>
+            <id_corso>CRS02</id_corso>
+            <id_corso>CRS04</id_corso>
+        </corsi_applicati>
+    </promozione>
+</elenco_promozioni>

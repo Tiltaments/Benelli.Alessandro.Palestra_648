@@ -1,5 +1,5 @@
 <?php
-// carrello.php 
+// carrello.php - Pannello Carrello Cliente
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/catalogo_service.php';
@@ -36,7 +36,7 @@ $totaleCrediti = 0;
 <?php endif; ?>
 
 <?php if ($errore): ?>
-    <div class="alert alert-danger"><?= htmlspecialchars($errore) ?></div>
+    <div class="alert-wip"><?= htmlspecialchars($errore) ?></div>
 <?php endif; ?>
 
 <div class="cart-container">

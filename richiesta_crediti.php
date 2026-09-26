@@ -1,5 +1,5 @@
 <?php
-// richiesta_crediti.php 
+// richiesta_crediti.php - Pagina di Richiesta Crediti per la Palestra 648 con gestione della richiesta e visualizzazione dello storico
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/header.php';
 
@@ -27,7 +27,7 @@ $storicoRichieste = [];
 <?php endif; ?>
 
 <?php if ($messaggioErrore): ?>
-    <div class="alert alert-danger"><?= htmlspecialchars($messaggioErrore) ?></div>
+    <div class="alert-wip"><?= htmlspecialchars($messaggioErrore) ?></div>
 <?php endif; ?>
 
 <div class="grid-layout">
