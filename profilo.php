@@ -1,5 +1,5 @@
 <?php
-// profilo.php - Area Personale del Cliente (CU2)
+// profilo.php - Pagina del Profilo Utente della Palestra 648 con gestione saldo, storico ordini e reputazione community
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/header.php';
 
@@ -46,13 +46,13 @@ if (file_exists($xmlTransazioni)) {
         if ($nodiOrdini !== false) {
             foreach ($nodiOrdini as $nodoOrdine) {
                 if ($nodoOrdine instanceof DOMElement) {
-                    $idOffertaNodo = $nodoOrdine->getElementsByTagName('id_offerta')->item(0);
+                    $idOffertaNodo = $nodoOrdine->getElementsByTagName('id_corso')->item(0);
                     $creditiNodo = $nodoOrdine->getElementsByTagName('crediti_pagati')->item(0);
                     $dataNodo = $nodoOrdine->getElementsByTagName('data_ordine')->item(0);
 
                     $storicoOrdini[] = [
                         'id_ordine' => $nodoOrdine->getAttribute('id_ordine'),
-                        'id_offerta' => $idOffertaNodo ? $idOffertaNodo->nodeValue : 'N/D',
+                        'id_corso' => $idOffertaNodo ? $idOffertaNodo->nodeValue : 'N/D',
                         'crediti_pagati' => $creditiNodo ? $creditiNodo->nodeValue : '0',
                         'data_ordine' => $dataNodo ? $dataNodo->nodeValue : '-'
                     ];
@@ -71,6 +71,9 @@ if (file_exists($xmlTransazioni)) {
 }
 
 // --- CALCOLO DELLA REPUTAZIONE ---
+// La reputazione misura il contributo dell'utente alla community.
+// È calcolata sommando i voti ricevuti sui propri post e risposte,
+// con due moltiplicatori: uno per l'acquisto verificato, uno per il ruolo del votante.
 $reputazioneTotale = 0;
 $xmlCommunity = __DIR__ . '/data/community.xml';
 
@@ -82,11 +85,13 @@ if (file_exists($xmlCommunity)) {
         $xpathComm = new DOMXPath($domComm);
 
         // 1. Calcoliamo la reputazione dai POST PRINCIPALI
+        // (recensioni e domande scritte direttamente dall'utente sui corsi)
         $mieiPost = $xpathComm->query("//contributo[id_autore='$userId']");
         if ($mieiPost !== false) {
             foreach ($mieiPost as $post) {
                 if ($post instanceof DOMElement) {
                     $acquistoVerificato = $post->getAttribute('acquisto_verificato') === 'true';
+                    // Chi ha acquistato il corso ottiene un bonus del 50% sulla reputazione
                     $moltiplicatoreAcquisto = $acquistoVerificato ? 1.5 : 1.0;
 
                     $valutazioni = $post->getElementsByTagName('valutazione');
@@ -96,7 +101,10 @@ if (file_exists($xmlCommunity)) {
                             $utilita = (int) ($voto->getElementsByTagName('utilita')->item(0)->nodeValue ?? 0);
                             $ruoloVotante = $voto->getAttribute('ruolo_votante');
 
+                            // Il voto di un gestore vale 3x rispetto a quello di un cliente normale
                             $moltiplicatoreRuolo = ($ruoloVotante === 'gestore') ? 3.0 : 1.0;
+
+                            // Formula: (supporto + utilità) × moltiplicatore_acquisto × moltiplicatore_ruolo
                             $reputazioneTotale += ($supporto + $utilita) * $moltiplicatoreAcquisto * $moltiplicatoreRuolo;
                         }
                     }
@@ -105,10 +113,13 @@ if (file_exists($xmlCommunity)) {
         }
 
         // 2. Calcoliamo la reputazione dalle RISPOSTE
+        // (risposte scritte dell'utente all'interno dei thread di discussione)
         $mieRisposte = $xpathComm->query("//risposta[id_autore='$userId']");
         if ($mieRisposte !== false) {
             foreach ($mieRisposte as $risposta) {
                 if ($risposta instanceof DOMElement) {
+                    // Risaliamo alla struttura XML: risposta → <risposte> → <contributo>
+                    // per leggere l'attributo 'acquisto_verificato' del post padre
                     $nodoRisposte = $risposta->parentNode;
                     $nodoContributo = $nodoRisposte ? $nodoRisposte->parentNode : null;
 
@@ -125,6 +136,7 @@ if (file_exists($xmlCommunity)) {
                             $utilita = (int) ($voto->getElementsByTagName('utilita')->item(0)->nodeValue ?? 0);
                             $ruoloVotante = $voto->getAttribute('ruolo_votante');
 
+                            // Stesso moltiplicatore: voto gestore vale 3x
                             $moltiplicatoreRuolo = ($ruoloVotante === 'gestore') ? 3.0 : 1.0;
                             $reputazioneTotale += ($supporto + $utilita) * $moltiplicatoreAcquisto * $moltiplicatoreRuolo;
                         }
@@ -185,7 +197,7 @@ if (file_exists($xmlCommunity)) {
                     <?php foreach ($storicoOrdini as $ordine): ?>
                         <tr>
                             <td><code><?= htmlspecialchars($ordine['id_ordine']) ?></code></td>
-                            <td><strong><?= htmlspecialchars($ordine['id_offerta']) ?></strong></td>
+                            <td><strong><?= htmlspecialchars($ordine['id_corso']) ?></strong></td>
                             <td><?= htmlspecialchars(date('d/m/Y H:i', strtotime($ordine['data_ordine']))) ?></td>
                             <td style="font-weight: bold;"><?= htmlspecialchars($ordine['crediti_pagati']) ?></td>
                         </tr>

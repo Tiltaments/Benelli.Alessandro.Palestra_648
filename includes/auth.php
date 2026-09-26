@@ -1,5 +1,5 @@
 <?php
-
+// includes/auth.php - Gestione dell'autenticazione e dei ruoli utente
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

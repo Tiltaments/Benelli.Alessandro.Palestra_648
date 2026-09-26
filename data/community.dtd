@@ -2,7 +2,7 @@
 <!ELEMENT contributo (id_autore, data_creazione, testo, valutazioni?, risposte?)>
 <!ATTLIST contributo 
     id_post ID #REQUIRED
-    id_offerta CDATA #REQUIRED
+    id_corso CDATA #REQUIRED
     tipo (recensione | domanda) #REQUIRED
     acquisto_verificato (true | false) #REQUIRED>
 <!ELEMENT id_autore (#PCDATA)>

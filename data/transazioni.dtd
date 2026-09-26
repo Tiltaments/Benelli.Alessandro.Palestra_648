@@ -16,11 +16,11 @@
 <!ELEMENT data_gestione (#PCDATA)>
 
 <!ELEMENT ordini (ordine*)>
-<!ELEMENT ordine (id_offerta, crediti_pagati, bonus_ottenuto, indirizzo_fatturazione, data_ordine)>
+<!ELEMENT ordine (id_corso, crediti_pagati, bonus_ottenuto, indirizzo_fatturazione, data_ordine)>
 <!ATTLIST ordine 
     id_ordine ID #REQUIRED
     id_cliente CDATA #REQUIRED>
-<!ELEMENT id_offerta (#PCDATA)>
+<!ELEMENT id_corso (#PCDATA)>
 <!ELEMENT crediti_pagati (#PCDATA)>
 <!ELEMENT bonus_ottenuto (#PCDATA)>
 <!ELEMENT indirizzo_fatturazione (#PCDATA)>

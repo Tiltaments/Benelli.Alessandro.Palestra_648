@@ -1,5 +1,5 @@
 <?php
-
+// admin_crediti.php - Pannello Amministratore per l'approvazione delle richieste di ricarica crediti
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/header.php';
 
@@ -12,10 +12,10 @@ $messaggioErrore = '';
 
 // BLOCCATO: Non modifichiamo il file transazioni.xml
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $messaggioSuccesso = "<div class='alert-danger'><strong>🚧 WORK IN PROGRESS:</strong> Connessione al file transazioni.xml per l'approvazione disattivata in questa versione.</div>";
+    $messaggioSuccesso = "<div class='alert-wip'><strong>🚧 WORK IN PROGRESS:</strong> Connessione al file transazioni.xml per l'approvazione disattivata in questa versione.</div>";
 }
 
-// Dati fittizi statici per simulare richieste in attesa di approvazione (per test e sviluppo)
+// Dati fittizi statici per simulare richieste in attesa di approvazione (test)
 $richiesteInAttesa = [
     ['id' => 'RIC12345', 'id_cliente' => '4', 'crediti' => '50', 'data_richiesta' => '2026-08-24T10:00:00'],
     ['id' => 'RIC67890', 'id_cliente' => '5', 'crediti' => '150', 'data_richiesta' => '2026-08-25T14:30:00']
@@ -27,7 +27,7 @@ $richiesteInAttesa = [
 </div>
 
 <?php if ($messaggioSuccesso): ?>
-    <div class="alert alert-danger" style="background-color:#ffeeba; color:#856404; border-color:#ffeeba;"><?= $messaggioSuccesso ?></div>
+    <div class="alert-wip"><?= $messaggioSuccesso ?></div>
 <?php endif; ?>
 <?php if ($messaggioErrore): ?>
     <div class="alert alert-danger"><?= htmlspecialchars($messaggioErrore) ?></div>

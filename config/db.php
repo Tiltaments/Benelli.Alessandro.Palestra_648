@@ -1,5 +1,5 @@
 <?php
-
+// config/db.php - Configurazione della connessione al database per la Palestra 648
 $host = '127.0.0.1';
 $db   = 'palestra648';
 $user = 'root';

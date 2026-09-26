@@ -1,5 +1,5 @@
 <?php
-// moderazione.php - Pannello di Moderazione Community (CU Gestore)
+// moderazione.php - Pannello di Moderazione della Community per Gestori e Admin con gestione XML dei contributi
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/header.php';
 
@@ -54,7 +54,7 @@ if (file_exists($xmlCommunity)) {
                 if ($p instanceof DOMElement) {
                     $tuttiIContributi[] = [
                         'id_post' => $p->getAttribute('id_post'),
-                        'id_offerta' => $p->getAttribute('id_offerta'),
+                        'id_corso' => $p->getAttribute('id_corso'),
                         'tipo' => $p->getAttribute('tipo'),
                         'acquisto_verificato' => $p->getAttribute('acquisto_verificato') === 'true',
                         'id_autore' => $p->getElementsByTagName('id_autore')->item(0)->nodeValue ?? 'N/D',
@@ -86,7 +86,7 @@ if (file_exists($xmlCommunity)) {
             <thead>
                 <tr>
                     <th>ID Post</th>
-                    <th>Corso (Offerta)</th>
+                    <th>Corso (ID)</th>
                     <th>Autore (ID)</th>
                     <th>Tipologia & Stato</th>
                     <th>Testo del Contributo</th>
@@ -98,7 +98,7 @@ if (file_exists($xmlCommunity)) {
                 <?php foreach ($tuttiIContributi as $c): ?>
                     <tr>
                         <td><code><?= htmlspecialchars($c['id_post']) ?></code></td>
-                        <td><strong><?= htmlspecialchars($c['id_offerta']) ?></strong></td>
+                        <td><strong><?= htmlspecialchars($c['id_corso']) ?></strong></td>
                         <td>Utente #<?= htmlspecialchars($c['id_autore']) ?></td>
                         <td>
                             <span class="badge-tipo"><?= htmlspecialchars($c['tipo']) ?></span><br><br>

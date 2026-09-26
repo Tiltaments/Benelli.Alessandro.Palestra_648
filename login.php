@@ -1,5 +1,5 @@
 <?php
-// login.php
+// login.php - Pagina di Login per la Palestra 648 con gestione sessione e autenticazione
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/includes/auth.php';
 
@@ -17,24 +17,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($username) || empty($password)) {
         $errore = "Inserisci sia username che password.";
     } else {
+        // Query preparata con parametro "?" per prevenire SQL Injection:
+        // il valore di $username non viene mai concatenato direttamente nella query
         $stmt = $pdo->prepare("SELECT id, username, password, nome, cognome, ruolo, stato FROM utenti WHERE username = ?");
         $stmt->execute([$username]);
-        $utente = $stmt->fetch();
+        $utente = $stmt->fetch(); // Restituisce un array associativo o false se non trovato
 
+        // password_verify() confronta la password in chiaro inserita dall'utente
+        // con l'hash BCrypt salvato nel database (non si confrontano mai le password in chiaro)
         if ($utente && password_verify($password, $utente['password'])) {
             if ($utente['stato'] === 'bannato') {
                 $errore = "Il tuo account è stato sospeso dall'amministratore.";
             } else {
-                // Impostazione variabili di sessione
+                // Salviamo i dati dell'utente in sessione: da questo momento è "loggato"
+                // Questi valori sono accessibili in tutte le pagine tramite $_SESSION
                 $_SESSION['user_id'] = $utente['id'];
                 $_SESSION['username'] = $utente['username'];
                 $_SESSION['nome_completo'] = $utente['nome'] . ' ' . $utente['cognome'];
-                $_SESSION['ruolo'] = $utente['ruolo'];
+                $_SESSION['ruolo'] = $utente['ruolo']; // es. 'cliente', 'gestore', 'admin'
 
                 header("Location: index.php");
                 exit();
             }
         } else {
+            // Messaggio generico: non specifichiamo se è lo username o la password
+            // ad essere errata (per non dare informazioni utili a un intruso)
             $errore = "Credenziali non valide.";
         }
     }
