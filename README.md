@@ -63,7 +63,7 @@ Il codice segue un pattern procedurale modulare, suddiviso per responsabilità:
 1. Clona o scarica il repository nella cartella `htdocs` di XAMPP (`C:/xampp/htdocs/palestra648`).
 2. Avvia **Apache** e **MySQL** dal pannello di controllo di XAMPP.
 3. Importa il database eseguendo lo script SQL presente nel file `schema.sql` (puoi usare phpMyAdmin all'indirizzo `http://localhost/phpmyadmin/`).
-4. Assicurati che i file XML all'interno della cartella `/data/` (`catalogo.xml`, `transazioni.xml`, `community.xml`, `faq.xml`) abbiano i permessi di scrittura attivi.
+4. Assicurati che i file XML all'interno della cartella `/data/` (`catalogo.xml`, `promozioni.xml`, `transazioni.xml`, `community.xml`, `faq.xml`) abbiano i permessi di scrittura attivi.
 5. Apri il browser all'indirizzo: `http://localhost/palestra648/index.php`
 
 ---

@@ -5,6 +5,14 @@ require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/catalogo_service.php';
 $offerte = caricaOfferteCatalogo();
 
+// Mappatura comoda id_corso => titolo del corso dal catalogo
+$mappaCorsi = [];
+foreach ($offerte as $o) {
+    if (isset($o['id'])) {
+        $mappaCorsi[$o['id']] = $o['titolo'];
+    }
+}
+
 // SICUREZZA: Solo l'amministratore o il gestore possono accedere
 richiediRuolo(['admin', 'gestore']);
 
@@ -52,27 +60,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // B) ELEVAZIONE DA COMMUNITY
-    if ($azione === 'eleva_domanda') {
+    elseif ($azione === 'eleva_domanda') {
         $idPostOrigine = $_POST['id_post_origine'] ?? '';
         $testoRisposta = trim($_POST['risposta_elevata'] ?? '');
 
         if (!empty($idPostOrigine) && !empty($testoRisposta)) {
-            // Step B1: Recuperiamo il testo della domanda originale da community.xml
+            // Step B1: Recuperiamo testo e id_corso originale da community.xml
             $testoDomanda = '';
+            $idCorsoOrigine = '';
+
             if (file_exists($xmlCommunity)) {
                 $domComm = new DOMDocument();
                 $domComm->preserveWhiteSpace = false;
                 if ($domComm->load($xmlCommunity)) {
                     $xpathComm = new DOMXPath($domComm);
-                    // Cerchiamo la domanda esatta tramite il suo id_post
-                    $nodoTesto = $xpathComm->query("//contributo[@id_post='$idPostOrigine']/testo")->item(0);
-                    if ($nodoTesto) {
-                        $testoDomanda = $nodoTesto->nodeValue;
+                    // Cerchiamo il contributo esatto tramite id_post
+                    $nodoPost = $xpathComm->query("//contributo[@id_post='$idPostOrigine']")->item(0);
+                    if ($nodoPost instanceof DOMElement) {
+                        $idCorsoOrigine = $nodoPost->getAttribute('id_corso');
+                        $nodoTesto = $nodoPost->getElementsByTagName('testo')->item(0);
+                        if ($nodoTesto) {
+                            $testoDomanda = $nodoTesto->nodeValue;
+                        }
                     }
                 }
             }
 
-            // Step B2: Se abbiamo trovato il testo, salviamo in faq.xml
+            // Step B2: Determiniamo l'etichetta del corso corretta in base al catalogo
+            $etichettaCorso = 'Generale';
+            if (!empty($idCorsoOrigine) && isset($mappaCorsi[$idCorsoOrigine])) {
+                $etichettaCorso = $mappaCorsi[$idCorsoOrigine];
+            }
+
+            // Step B3: Salviamo in faq.xml
             if (!empty($testoDomanda)) {
                 $domFaq = new DOMDocument();
                 $domFaq->preserveWhiteSpace = false;
@@ -86,9 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $nuovaFaq->setAttribute('provenienza', 'elevata');
 
                         $nuovaFaq->appendChild($domFaq->createElement('domanda', $testoDomanda));
-                        if (!empty($_POST['etichetta_corso'])) {
-                            $nuovaFaq->appendChild($domFaq->createElement('etichetta_corso', $_POST['etichetta_corso']));
-                        }
+                        $nuovaFaq->appendChild($domFaq->createElement('etichetta_corso', $etichettaCorso));
                         $nuovaFaq->appendChild($domFaq->createElement('risposta', $testoRisposta));
                         $nuovaFaq->appendChild($domFaq->createElement('id_post_origine', $idPostOrigine));
                         $nuovaFaq->appendChild($domFaq->createElement('autore_inserimento', getRuolo()));
@@ -96,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         $root->appendChild($nuovaFaq);
                         $domFaq->save($xmlFaq);
-                        $messaggio = "<div class='alert-success'>Domanda elevata a FAQ ufficiale con successo!</div>";
+                        $messaggio = "<div class='alert-success'>Domanda elevata a FAQ ufficiale per il corso \"" . htmlspecialchars($etichettaCorso) . "\" con successo!</div>";
                     }
                 }
             } else {
@@ -104,6 +122,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } else {
             $messaggio = "<div class='alert-danger'>Seleziona una domanda dal menù e scrivi la risposta ufficiale.</div>";
+        }
+    }
+
+    // C) ELIMINAZIONE FAQ
+    elseif ($azione === 'elimina_faq') {
+        $idFaq = $_POST['id_faq'] ?? '';
+        if (!empty($idFaq) && file_exists($xmlFaq)) {
+            $domFaq = new DOMDocument();
+            $domFaq->preserveWhiteSpace = false;
+            $domFaq->formatOutput = true;
+            $domFaq->load($xmlFaq);
+            $xpathFaq = new DOMXPath($domFaq); // <--- Istanza XPath
+
+            $nodoFaq = $xpathFaq->query("//faq[@id='$idFaq']")->item(0);
+            if ($nodoFaq) {
+                $nodoFaq->parentNode->removeChild($nodoFaq);
+                $domFaq->save($xmlFaq);
+                $messaggio = "<div class='alert-success'>FAQ eliminata con successo!</div>";
+            } else {
+                $messaggio = "<div class='alert-danger'>FAQ non trovata.</div>";
+            }
+        } else {
+            $messaggio = "<div class='alert-danger'>Errore: ID FAQ non valido o file XML mancante.</div>";
         }
     }
 }
@@ -124,6 +165,7 @@ if (file_exists($xmlFaq)) {
                     'provenienza' => $nodo->getAttribute('provenienza'),
                     'domanda' => $nodo->getElementsByTagName('domanda')->item(0)->nodeValue ?? '',
                     'risposta' => $nodo->getElementsByTagName('risposta')->item(0)->nodeValue ?? '',
+                    'etichetta_corso' => $nodo->getElementsByTagName('etichetta_corso')->item(0)->nodeValue ?? 'Generale',
                     'autore' => $nodo->getElementsByTagName('autore_inserimento')->item(0)->nodeValue ?? '',
                     'data' => $nodo->getElementsByTagName('data_pubblicazione')->item(0)->nodeValue ?? '-'
                 ];
@@ -132,7 +174,7 @@ if (file_exists($xmlFaq)) {
     }
 }
 
-// B) Leggiamo le domande dalla community (da elevare) tramite la query XPath
+// B) Leggiamo le domande dalla community (da elevare) tramite XPath
 $domandeCommunity = [];
 if (file_exists($xmlCommunity)) {
     $domComm = new DOMDocument();
@@ -144,8 +186,13 @@ if (file_exists($xmlCommunity)) {
         if ($nodiDomande !== false) {
             foreach ($nodiDomande as $nodo) {
                 if ($nodo instanceof DOMElement) {
+                    $idCorso = $nodo->getAttribute('id_corso');
+                    $nomeCorso = $mappaCorsi[$idCorso] ?? 'Generale';
+
                     $domandeCommunity[] = [
                         'id_post' => $nodo->getAttribute('id_post'),
+                        'id_corso' => $idCorso,
+                        'nome_corso' => $nomeCorso,
                         'testo' => $nodo->getElementsByTagName('testo')->item(0)->nodeValue ?? 'Domanda senza testo'
                     ];
                 }
@@ -154,8 +201,6 @@ if (file_exists($xmlCommunity)) {
     }
 }
 ?>
-
-
 
 <div class="card">
     <h1>📚 Gestione FAQ Ufficiali</h1>
@@ -191,27 +236,18 @@ if (file_exists($xmlCommunity)) {
         </form>
     </div>
 
-    <!-- Blocco: ELEVAZIONE -->
+    <!-- Blocco: ELEVAZIONE DA COMMUNITY -->
     <div class="card">
         <h2 style="margin-bottom: 15px; font-size: 18px;">🚀 Eleva dalla Community</h2>
         <form method="POST" action="admin_faq.php">
             <input type="hidden" name="azione" value="eleva_domanda">
             <div class="form-group">
-                <label>Etichetta Corso (Opzionale):</label>
-                <select name="etichetta_corso">
-                    <option value="Generale">Interesse Generale</option>
-                    <?php foreach ($offerte as $o): ?>
-                        <option value="<?= htmlspecialchars($o['titolo']) ?>"><?= htmlspecialchars($o['titolo']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Scegli una Domanda Utente:</label>
+                <label>Scegli una Domanda Utente (il corso verrà associato automaticamente):</label>
                 <select name="id_post_origine" required>
                     <option value="">-- Seleziona una domanda --</option>
                     <?php foreach ($domandeCommunity as $dc): ?>
                         <option value="<?= htmlspecialchars($dc['id_post']) ?>">
-                            <?= htmlspecialchars(mb_substr($dc['testo'], 0, 50)) ?>... (<?= $dc['id_post'] ?>)
+                            [<?= htmlspecialchars($dc['nome_corso']) ?>] <?= htmlspecialchars(mb_substr($dc['testo'], 0, 45)) ?>... (<?= $dc['id_post'] ?>)
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -235,16 +271,19 @@ if (file_exists($xmlCommunity)) {
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Corso / Ambito</th>
                     <th>Provenienza</th>
-                    <th>Domanda</th>
+                    <th>Domanda e Risposta</th>
                     <th>Autore</th>
                     <th>Data Pubblicazione</th>
+                    <th>Azione</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($elencoFaq as $f): ?>
                     <tr>
                         <td><code><?= htmlspecialchars($f['id']) ?></code></td>
+                        <td><strong><?= htmlspecialchars($f['etichetta_corso']) ?></strong></td>
                         <td>
                             <span class="badge-prov <?= 'badge-' . htmlspecialchars($f['provenienza']) ?>">
                                 <?= htmlspecialchars($f['provenienza']) ?>
@@ -256,6 +295,14 @@ if (file_exists($xmlCommunity)) {
                         </td>
                         <td><?= htmlspecialchars($f['autore']) ?></td>
                         <td><?= htmlspecialchars(date('d/m/Y', strtotime($f['data']))) ?></td>
+
+                        <td>
+                            <form method="POST" action="admin_faq.php">
+                                <input type="hidden" name="azione" value="elimina_faq">
+                                <input type="hidden" name="id_faq" value="<?= htmlspecialchars($f['id']) ?>">
+                                <button type="submit" onclick="return confirm('Sei sicuro di voler eliminare questa FAQ?');" class="btn-elimina">Elimina</button>
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

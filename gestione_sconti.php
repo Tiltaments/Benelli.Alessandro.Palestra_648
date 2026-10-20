@@ -7,9 +7,124 @@ require_once __DIR__ . '/includes/catalogo_service.php';
 richiediRuolo(['gestore', 'admin']);
 $messaggio = '';
 
-// BLOCCATO: Intercettiamo il POST 
+// --- GESTIONE AZIONI POST ---
+$xmlPromozioni = __DIR__ . '/data/promozioni.xml';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $messaggio = "<div class='alert-wip'><strong>🚧 WORK IN PROGRESS:</strong> L'aggiornamento dinamico del file promozioni.xml sarà implementato nel prossimo step.</div>";
+    if (isset($_POST['azione']) && $_POST['azione'] === 'aggiungi_promo') {
+
+        $titoloPromo  = trim($_POST['titolo_promo'] ?? '');
+        $tipo         = $_POST['tipo'] ?? ''; // 'sconto' o 'bonus'
+        $valore       = (int)($_POST['valore'] ?? 0);
+        $tipoCriterio = $_POST['tipo_criterio'] ?? 'indiscriminato';
+        $valoreSoglia = (int)($_POST['valore_criterio'] ?? 0);
+        $dataInizio   = $_POST['data_inizio'] ?? '';
+        $dataFine     = $_POST['data_fine'] ?? '';
+
+        $corsiSelezionati = $_POST['id_corsi'] ?? []; // Array degli id_corso scelti con i checkbox
+
+        // Controllo validità minima dei dati
+        if (!empty($titoloPromo) && !empty($tipo) && $valore > 0 && !empty($dataInizio) && !empty($dataFine) && !empty($corsiSelezionati)) {
+
+            $dom = new DOMDocument();
+            $dom->preserveWhiteSpace = false;
+            $dom->formatOutput = true;
+
+            // Carichiamo l'XML o lo creiamo con radice <elenco_promozioni> e DOCTYPE se non esiste
+            if (file_exists($xmlPromozioni) && filesize($xmlPromozioni) > 0) {
+                $dom->load($xmlPromozioni);
+                $root = $dom->documentElement;
+            } else {
+                $implementation = new DOMImplementation();
+                $dtd = $implementation->createDocumentType('elenco_promozioni', '', 'promozioni.dtd');
+                $dom = $implementation->createDocument(null, 'elenco_promozioni', $dtd);
+                $dom->encoding = 'UTF-8';
+                $dom->formatOutput = true;
+                $root = $dom->documentElement;
+            }
+
+            // 1. Creazione del nodo <promozione> con attributo ID
+            $promozione = $dom->createElement('promozione');
+            $idPromo = 'PR_' . time() . mt_rand(10, 99);
+            $promozione->setAttribute('id_promo', $idPromo);
+
+            // 2. Aggiunta dei nodi figli ordinati secondo la DTD:
+            // (titolo, tipo, valore, criterio_applicazione, data_inizio, data_fine, corsi_applicati)
+            $promozione->appendChild($dom->createElement('titolo', htmlspecialchars($titoloPromo)));
+            $promozione->appendChild($dom->createElement('tipo', htmlspecialchars($tipo)));
+            $promozione->appendChild($dom->createElement('valore', (string)$valore));
+
+            // 3. Creazione del nodo <criterio_applicazione> (PCDATA con attributi tipo_criterio e soglia facoltativo)
+            $descrizioneCriterio = 'Tutti i clienti';
+            if ($tipoCriterio === 'anzianita') {
+                $descrizioneCriterio = "Clienti con almeno $valoreSoglia mesi di iscrizione";
+            } elseif ($tipoCriterio === 'spesa_pregressa') {
+                $descrizioneCriterio = "Clienti con spesa minima di $valoreSoglia crediti";
+            } elseif ($tipoCriterio === 'reputazione') {
+                $descrizioneCriterio = "Clienti con reputazione minima di $valoreSoglia punti";
+            }
+
+            $criterioNode = $dom->createElement('criterio_applicazione', htmlspecialchars($descrizioneCriterio));
+            $criterioNode->setAttribute('tipo_criterio', htmlspecialchars($tipoCriterio));
+            if ($tipoCriterio !== 'indiscriminato' && $valoreSoglia > 0) {
+                $criterioNode->setAttribute('soglia', (string)$valoreSoglia);
+            }
+            $promozione->appendChild($criterioNode);
+
+            // 4. Aggiunta delle date di validità
+            $promozione->appendChild($dom->createElement('data_inizio', htmlspecialchars($dataInizio)));
+            $promozione->appendChild($dom->createElement('data_fine', htmlspecialchars($dataFine)));
+
+            // 5. Creazione del nodo contenitore <corsi_applicati> con i singoli <id_corso>
+            $corsiApplicatiNode = $dom->createElement('corsi_applicati');
+            foreach ($corsiSelezionati as $idCorsoScelto) {
+                $corsiApplicatiNode->appendChild($dom->createElement('id_corso', htmlspecialchars($idCorsoScelto)));
+            }
+            $promozione->appendChild($corsiApplicatiNode);
+
+            // 6. Validazione rispetto alla DTD e salvataggio
+            $root->appendChild($promozione);
+            
+            // Validazione XML rispetto alla DTD
+            if (@$dom->validate()) {
+                if ($dom->save($xmlPromozioni)) {
+                    $messaggio = "<div class='alert alert-success' style='background:#d4edda; color:#155724; padding:12px; border-radius:4px; margin-bottom:20px;'>Promozione \"<strong>" . htmlspecialchars($titoloPromo) . "</strong>\" creata e validata con successo rispetto alla DTD!</div>";
+                } else {
+                    $messaggio = "<div class='alert alert-danger' style='background:#f8d7da; color:#721c24; padding:12px; border-radius:4px; margin-bottom:20px;'>Errore durante il salvataggio del file XML.</div>";
+                }
+            } else {
+                $messaggio = "<div class='alert alert-danger' style='background:#f8d7da; color:#721c24; padding:12px; border-radius:4px; margin-bottom:20px;'>Errore di validazione DTD: la struttura generata non rispetta promozioni.dtd.</div>";
+            }
+        } else {
+            $messaggio = "<div class='alert-danger'>Errore: Compila tutti i campi richiesti e seleziona almeno un corso.</div>";
+        }
+    } elseif (isset($_POST['azione']) && $_POST['azione'] === 'elimina_promo') {
+        $idPromoDaEliminare = $_POST['id_promo'] ?? '';
+
+        if (!empty($idPromoDaEliminare) && file_exists($xmlPromozioni)) {
+            $dom = new DOMDocument();
+            $dom->preserveWhiteSpace = false;
+            $dom->formatOutput = true;
+
+            if ($dom->load($xmlPromozioni)) {
+                $xpath = new DOMXPath($dom);
+                $promoNodi = $xpath->query("//promozione[@id_promo='$idPromoDaEliminare']");
+
+                if ($promoNodi && $promoNodi->length > 0) {
+                    $nodoTrovato = $promoNodi->item(0);
+                    $nodoTrovato->parentNode->removeChild($nodoTrovato);
+
+                    if ($dom->save($xmlPromozioni)) {
+                        $messaggio = "<div class='alert alert-success' style='background:#d4edda; color:#155724; padding:12px; border-radius:4px; margin-bottom:20px;'>Promozione eliminata con successo!</div>";
+                    } else {
+                        $messaggio = "<div class='alert alert-danger' style='background:#f8d7da; color:#721c24; padding:12px; border-radius:4px; margin-bottom:20px;'>Errore durante il salvataggio delle modifiche XML.</div>";
+                    }
+                } else {
+                    $messaggio = "<div class='alert alert-danger' style='background:#f8d7da; color:#721c24; padding:12px; border-radius:4px; margin-bottom:20px;'>Promozione non trovata.</div>";
+                }
+            }
+        }
+    }
 }
 
 $offerteAttuali = caricaOfferteCatalogo('default');
@@ -103,6 +218,121 @@ $offerteAttuali = caricaOfferteCatalogo('default');
         <button type="submit" class="btn-submit" style="margin-top: 15px; font-size: 18px; padding: 15px;">💾 Salva e Associa Promozione</button>
     </form>
 </div>
+
+<!-- TABELLA PROMOZIONI PRESENTI -->
+<?php
+$elencoPromoPresenti = [];
+if (file_exists($xmlPromozioni) && filesize($xmlPromozioni) > 0) {
+    $domP = new DOMDocument();
+    $domP->preserveWhiteSpace = false;
+    if ($domP->load($xmlPromozioni)) {
+        $nodiPr = $domP->getElementsByTagName('promozione');
+        foreach ($nodiPr as $p) {
+            $idPr = $p->getAttribute('id_promo');
+            $titPr = $p->getElementsByTagName('titolo')->item(0)->nodeValue ?? '';
+            $tipPr = $p->getElementsByTagName('tipo')->item(0)->nodeValue ?? '';
+            $valPr = $p->getElementsByTagName('valore')->item(0)->nodeValue ?? '';
+            $critPrElem = $p->getElementsByTagName('criterio_applicazione')->item(0);
+            $critPrTipo = $critPrElem ? $critPrElem->getAttribute('tipo_criterio') : '';
+            $critPrSoglia = $critPrElem ? $critPrElem->getAttribute('soglia') : '';
+            $critPrTesto = $critPrElem ? $critPrElem->nodeValue : '';
+            $dInizioPr = $p->getElementsByTagName('data_inizio')->item(0)->nodeValue ?? '';
+            $dFinePr = $p->getElementsByTagName('data_fine')->item(0)->nodeValue ?? '';
+            
+            $corsiPr = [];
+            $nodiC = $p->getElementsByTagName('id_corso');
+            foreach ($nodiC as $c) {
+                $corsiPr[] = $c->nodeValue;
+            }
+
+            $elencoPromoPresenti[] = [
+                'id' => $idPr,
+                'titolo' => $titPr,
+                'tipo' => $tipPr,
+                'valore' => $valPr,
+                'tipo_criterio' => $critPrTipo,
+                'soglia' => $critPrSoglia,
+                'criterio_testo' => $critPrTesto,
+                'data_inizio' => $dInizioPr,
+                'data_fine' => $dFinePr,
+                'corsi' => $corsiPr
+            ];
+        }
+    }
+}
+?>
+
+<div class="card" style="margin-top: 30px;">
+    <h2>📋 Promozioni Configurate nel Sistema</h2>
+    <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Consulta e gestisci tutte le offerte attive o programmate registrate in <code>promozioni.xml</code>.</p>
+
+    <?php if (empty($elencoPromoPresenti)): ?>
+        <p style="color: #888; font-style: italic;">Nessuna promozione configurata al momento.</p>
+    <?php else: ?>
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
+            <thead>
+                <tr style="background: #f1f3f5; border-bottom: 2px solid #dee2e6;">
+                    <th style="padding: 10px;">Titolo / ID</th>
+                    <th style="padding: 10px;">Tipologia</th>
+                    <th style="padding: 10px;">Criterio di Accesso</th>
+                    <th style="padding: 10px;">Periodo Validità</th>
+                    <th style="padding: 10px;">Corsi Target</th>
+                    <th style="padding: 10px; text-align: center;">Azione</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $oggi = date('Y-m-d');
+                foreach ($elencoPromoPresenti as $pItem): 
+                    $inCorso = ($oggi >= $pItem['data_inizio'] && $oggi <= $pItem['data_fine']);
+                ?>
+                    <tr style="border-bottom: 1px solid #dee2e6;">
+                        <td style="padding: 10px;">
+                            <strong><?= htmlspecialchars($pItem['titolo']) ?></strong><br>
+                            <small style="color: #777;">ID: <?= htmlspecialchars($pItem['id']) ?></small>
+                        </td>
+                        <td style="padding: 10px;">
+                            <?php if ($pItem['tipo'] === 'sconto'): ?>
+                                <span style="background: #e3f2fd; color: #0d47a1; padding: 3px 8px; border-radius: 4px; font-weight: bold;">
+                                    Sconto -<?= $pItem['valore'] ?>%
+                                </span>
+                            <?php else: ?>
+                                <span style="background: #d4edda; color: #155724; padding: 3px 8px; border-radius: 4px; font-weight: bold;">
+                                    Bonus +<?= $pItem['valore'] ?> crediti
+                                </span>
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding: 10px;">
+                            <span style="text-transform: capitalize; font-weight: bold;"><?= htmlspecialchars(str_replace('_', ' ', $pItem['tipo_criterio'])) ?></span>
+                            <?php if (!empty($pItem['soglia'])): ?>
+                                <br><small style="color: #555;">Soglia min: <strong><?= htmlspecialchars($pItem['soglia']) ?></strong></small>
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding: 10px;">
+                            <?= htmlspecialchars($pItem['data_inizio']) ?> &rarr; <?= htmlspecialchars($pItem['data_fine']) ?><br>
+                            <?php if ($inCorso): ?>
+                                <span style="color: #28a745; font-weight: bold; font-size: 12px;">● In corso adesso</span>
+                            <?php elseif ($oggi < $pItem['data_inizio']): ?>
+                                <span style="color: #17a2b8; font-size: 12px;">Programmata</span>
+                            <?php else: ?>
+                                <span style="color: #dc3545; font-size: 12px;">Scaduta</span>
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding: 10px;">
+                            <?= implode(', ', array_map('htmlspecialchars', $pItem['corsi'])) ?>
+                        </td>
+                        <td style="padding: 10px; text-align: center;">
+                            <form method="POST" action="gestione_sconti.php" onsubmit="return confirm('Sei sicuro di voler eliminare la promozione <?= addslashes(htmlspecialchars($pItem['titolo'])) ?>?');">
+                                <input type="hidden" name="azione" value="elimina_promo">
+                                <input type="hidden" name="id_promo" value="<?= htmlspecialchars($pItem['id']) ?>">
+                                <button type="submit" style="background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px;">Elimina 🗑️</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
 </div>
 
 <script>
