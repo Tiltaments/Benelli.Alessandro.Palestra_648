@@ -4,15 +4,67 @@ require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/includes/header.php';
 
 $messaggioCommunity = '';
+$xmlCommunity = __DIR__ . '/data/community.xml';
 
-// BLOCCATO: Intercettiamo il POST per l'inserimento di nuovi contributi generali
+// Gestione della richiesta POST per l'inserimento di un nuovo contributo generale
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $messaggioCommunity = "<div class='alert-wip'><strong>🚧 Lavori in Corso:</strong> L'inserimento di nuovi post nel Forum Generale sarà sbloccato nel prossimo step.</div>";
+    if (isset($_POST['azione_community']) && $_POST['azione_community'] === 'nuovo_contributo_generale') {
+        if (isLoggedIn() && getRuolo() === 'cliente') {
+            // Gestione dell'inserimento di un nuovo contributo generale
+            $testo = trim($_POST['testo'] ?? '');
+            if (!empty($testo)) {
+                $idAutore = $_SESSION['user_id'] ?? 'anonimo';
+                $dataCreazione = date('Y-m-d\TH:i:s');
+                $idPost = 'POST' . time(); // Generazione di un ID unico per il post
+                $tipo = 'domanda'; // Tipo di post generico
+
+                $dom = new DOMDocument();
+                $dom->preserveWhiteSpace = false;
+                $dom->formatOutput = true;
+                if (file_exists($xmlCommunity)) {
+                    $dom->load($xmlCommunity);
+                } else {
+                    $root = $dom->createElement('community');
+                    $dom->appendChild($root);
+                }
+
+                // Creazione del nuovo nodo contributo
+                $contributo = $dom->createElement('contributo');
+
+                // Impostazione degli attributi del contributo
+                $contributo->setAttribute('id_post', $idPost);
+                $contributo->setAttribute('id_corso', 'generale');
+                $contributo->setAttribute('tipo', $tipo);
+                $contributo->setAttribute('acquisto_verificato', 'false');
+
+                // Creazione dei nodi figli del contributo
+                $testoNode = $dom->createElement('testo', htmlspecialchars($testo));
+                $dataNode = $dom->createElement('data_creazione', $dataCreazione);
+                $autoreNode = $dom->createElement('id_autore', htmlspecialchars($idAutore));
+
+                // Aggiunta dei nodi figli al nodo contributo
+                $contributo->appendChild($autoreNode);
+                $contributo->appendChild($dataNode);
+                $contributo->appendChild($testoNode);
+                $dom->documentElement->appendChild($contributo);
+
+                // Salvataggio del file XML aggiornato
+                $dom->save($xmlCommunity);
+                $messaggioCommunity = "<div class='alert-success'>Il tuo contributo è stato pubblicato con successo!</div>";
+
+                $testo = ''; // Reset del campo testo dopo l'invio
+
+
+            } else {
+                $messaggioCommunity = "<div class='alert-danger'>Il testo del contributo non può essere vuoto.</div>";
+            }
+        }
+    }
 }
 
 // Simuliamo la lettura dei post generali da community.xml
 $postGenerali = [];
-$xmlCommunity = __DIR__ . '/data/community.xml';
+
 
 if (file_exists($xmlCommunity)) {
     $domComm = new DOMDocument();

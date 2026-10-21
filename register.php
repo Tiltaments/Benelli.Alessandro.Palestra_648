@@ -12,11 +12,15 @@ $errore = '';
 $successo = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Recuperiamo e sanitizziamo i dati inviati dal form
+    // Usiamo trim() per rimuovere spazi bianchi iniziali e finali
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
     $nome = trim($_POST['nome'] ?? '');
     $cognome = trim($_POST['cognome'] ?? '');
+    // Usiamo filter_var() per validare l'email
     $email = trim($_POST['email'] ?? '');
+    // Usiamo strtoupper() per il codice fiscale, che deve essere in maiuscolo
     $codice_fiscale = strtoupper(trim($_POST['codice_fiscale'] ?? ''));
     $telefono = trim($_POST['telefono'] ?? '');
     $indirizzo = trim($_POST['indirizzo'] ?? '');

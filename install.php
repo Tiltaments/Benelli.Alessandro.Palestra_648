@@ -1,13 +1,14 @@
 <?php
 // install.php - Script di installazione e popolamento iniziale del database
+require_once __DIR__ . '/dati_generali.php';
 
 // =========================================================================
-// CONFIGURAZIONE DATABASE (Modificare questi parametri se necessario)
+// CONFIGURAZIONE DATABASE (Letta direttamente da dati_generali.php)
 // =========================================================================
-$host = 'localhost';
-$username = 'root';
-$password = '';
-$dbname = 'palestra648';
+$host = $db_host ?? 'localhost';
+$username = $db_user ?? 'root';
+$password = $db_pass ?? '';
+$dbname = $db_name ?? 'palestra648';
 // =========================================================================
 
 $messaggi = [];

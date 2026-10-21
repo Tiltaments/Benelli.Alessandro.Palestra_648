@@ -7,13 +7,51 @@ richiediRuolo(['cliente']);
 $messaggioSuccesso = '';
 $messaggioErrore = '';
 
-// BLOCCATO: Non scriviamo in transazioni.xml
+
+$xmlPath = __DIR__ . '/data/transazioni.xml';
+$idCliente = $_SESSION['user_id'] ?? $_SESSION['id_cliente'] ?? null;
+
+// 1. GESTIONE DELLA RICHIESTA DI RICARICA  
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $messaggioErrore = "🚧 WORK IN PROGRESS: Il modulo di richiesta è completo, ma l'invio all'amministratore (XML) è disattivato.";
+    $creditiRichiesti = (int)($_POST['crediti'] ?? 0);
+
+    if ($creditiRichiesti <= 0) {
+        $messaggioErrore = "Inserisci una quantità di crediti valida (maggiore di 0).";
+    } elseif (!$idCliente) {
+        $messaggioErrore = "Sessione non valida. Effettua nuovamente il login.";
+    } else {
+        $xml = simplexml_load_file($xmlPath);
+
+        if ($xml !== false) {
+            $nuovaRichiesta = $xml->richieste_ricarica->addChild('richiesta');
+            $nuovaRichiesta->addAttribute('id_richiesta', 'RIC' . time());
+            $nuovaRichiesta->addAttribute('id_cliente', (string)$idCliente);
+            $nuovaRichiesta->addAttribute('stato', 'in_attesa');
+            $nuovaRichiesta->addChild('crediti_richiesti', (string)$creditiRichiesti);
+            $nuovaRichiesta->addChild('data_richiesta', date('Y-m-d\TH:i:s'));
+
+            $xml->asXML($xmlPath);
+            $messaggioSuccesso = "Richiesta di ricarica inviata con successo. L'amministratore la prenderà in carico.";
+        } else {
+            $messaggioErrore = "Errore durante il caricamento del file transazioni.";
+        }
+    }
 }
 
+// 2. CARICAMENTO STORICO
+$xml = simplexml_load_file($xmlPath);
 $storicoRichieste = [];
+// Se il file XML è stato caricato correttamente e l'ID cliente è disponibile, recupera lo storico delle richieste
+if ($xml !== false && $idCliente) {
+    // Sanitizza l'ID cliente per evitare problemi di sicurezza
+    $idClienteSanitizzato = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)$idCliente);
+    // Recupera tutte le richieste associate all'ID cliente
+    $storicoRichieste = $xml->xpath("//richiesta[@id_cliente='$idClienteSanitizzato']") ?: [];
+}
 ?>
+
+
+
 
 <div class="card">
     <h1>💳 Ricarica Crediti Palestra</h1>
@@ -59,9 +97,10 @@ $storicoRichieste = [];
                 <tbody>
                     <?php foreach ($storicoRichieste as $richiesta): ?>
                         <tr>
-                            <td><code><?= htmlspecialchars($richiesta['id']) ?></code></td>
-                            <td><strong><?= htmlspecialchars($richiesta['crediti']) ?></strong></td>
-                            <td><?= htmlspecialchars(date('d/m/Y H:i', strtotime($richiesta['data_richiesta']))) ?></td>
+                            <!-- NOTA: l'attributo si chiama id_richiesta, il tag crediti_richiesti -->
+                            <td><code><?= htmlspecialchars($richiesta['id_richiesta']) ?></code></td>
+                            <td><strong><?= htmlspecialchars($richiesta->crediti_richiesti) ?></strong></td>
+                            <td><?= htmlspecialchars(date('d/m/Y H:i', strtotime($richiesta->data_richiesta))) ?></td>
                             <td>
                                 <span class="stato-<?= htmlspecialchars($richiesta['stato']) ?>">
                                     <?= htmlspecialchars(str_replace('_', ' ', $richiesta['stato'])) ?>

@@ -45,10 +45,23 @@ $offerte = caricaOfferteCatalogo($ordinamento);
 
                     <h2 style="margin-top: 10px; font-size: 18px;"><?= htmlspecialchars($corso['titolo']) ?></h2>
                     <p style="font-size: 13px; color: #555; margin: 8px 0;"><?= htmlspecialchars($corso['descrizione']) ?></p>
-                    <p style="font-size: 12px; color: #777;">
-                        <strong>Trainer (Edizioni):</strong> <?= htmlspecialchars($corso['trainers']) ?><br>
+                    <p style="font-size: 12px; color: #777; margin-bottom: 5px;">
                         <strong>Intensità:</strong> <span style="text-transform: capitalize;"><?= htmlspecialchars($corso['intensita']) ?></span>
                     </p>
+
+                    <!-- BOX TURNI -->
+                    <div style="background: #fff; padding: 8px; border: 1px solid #eee; border-radius: 4px; font-size: 11px; color: #555;">
+                        <strong style="display: block; margin-bottom: 4px; color: #333;">📅 Turni ed Edizioni:</strong>
+                        <?php if (!empty($corso['edizioni'])): ?>
+                            <ul style="margin: 0; padding-left: 15px;">
+                                <?php foreach ($corso['edizioni'] as $ed): ?>
+                                    <li><strong><?= htmlspecialchars($ed['trainer']) ?>:</strong> <?= htmlspecialchars($ed['giorni']) ?> (<?= htmlspecialchars($ed['orario']) ?>)</li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php else: ?>
+                            <span style="color: #999;">Nessun turno specificato.</span>
+                        <?php endif; ?>
+                    </div>
                 </div>
 
                 <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px;">
