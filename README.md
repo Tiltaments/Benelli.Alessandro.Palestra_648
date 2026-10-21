@@ -12,7 +12,9 @@ Progetto di esame per il corso di **Linguaggi per il Web**.
 
 - https://github.com/Tiltaments/Benelli.Alessandro.Palestra_648.git
 
-**Descrizione dell'applicazione:** L'applicazione è un sistema informativo ed e-commerce orientato alla gestione di abbonamenti, corsi sportivi, lezioni con personal trainer e servizi per il benessere fisico.
+**Descrizione dell'applicazione:**
+
+L'applicazione è un sistema informativo ed e-commerce orientato alla gestione di abbonamenti, corsi sportivi, lezioni con personal trainer e servizi per il benessere fisico.
 
 ---
 
@@ -61,8 +63,8 @@ Il codice segue un pattern procedurale modulare, suddiviso per responsabilità:
 ## ⚙️ Guida all'Installazione (Locale con XAMPP)
 
 1. Clona o scarica il repository nella cartella `htdocs` di XAMPP (`C:/xampp/htdocs/palestra648`).
-2. Avvia **Apache** e **MySQL** dal pannello di controllo di XAMPP.
-3. Importa il database eseguendo lo script SQL presente nel file `schema.sql` (puoi usare phpMyAdmin all'indirizzo `http://localhost/phpmyadmin/`).
+2. Avvia **MySQL** dal pannello di controllo di XAMPP.
+3. Importa il database eseguendo lo script SQL presente nel file `install.php` (puoi usare phpMyAdmin all'indirizzo `http://localhost/phpmyadmin/`).
 4. Assicurati che i file XML all'interno della cartella `/data/` (`catalogo.xml`, `promozioni.xml`, `transazioni.xml`, `community.xml`, `faq.xml`) abbiano i permessi di scrittura attivi.
 5. Apri il browser all'indirizzo: `http://localhost/palestra648/index.php`
 
