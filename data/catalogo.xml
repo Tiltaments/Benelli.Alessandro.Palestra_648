@@ -9,8 +9,8 @@
         <prezzo_crediti>60</prezzo_crediti>
         <disponibile>true</disponibile>
         <edizioni>
-            <edizione id_edizione="ED01_MARCO" trainer="Marco Trainer" />
-            <edizione id_edizione="ED01_LUCA" trainer="Luca Trainer" />
+            <edizione id_edizione="ED_01_A" trainer="Marco Trainer" giorni="Giov" orario="15:00" disponibile="true"/>
+            <edizione id_edizione="ED_01_B" trainer="Luca Trainer" giorni="Sab" orario="19:00" disponibile="true"/>
         </edizioni>
     </corso>
     <corso id="CRS02" categoria="abbonamento">
@@ -21,30 +21,30 @@
         <prezzo_crediti>120</prezzo_crediti>
         <disponibile>true</disponibile>
         <edizioni>
-            <edizione id_edizione="ED02_ANDREA" trainer="Andrea Trainer" />
+            <edizione id_edizione="ED_02_A" trainer="Andrea Trainer" giorni="Lun,Mer,Ven" orario="17:00" disponibile="true"/>
         </edizioni>
     </corso>
     <corso id="CRS03" categoria="corso">
-        <titolo>Posturale &amp; Mobilità Articolare</titolo>
-        <descrizione>Esercizi a basso impatto mirati al riallineamento posturale, flessibilità della colonna e prevenzione infortuni.</descrizione>
+        <titolo>Posturale &amp; Mobilit&#224; Articolare</titolo>
+        <descrizione>Esercizi a basso impatto mirati al riallineamento posturale, flessibilit&#224; della colonna e prevenzione infortuni.</descrizione>
         <immagine>img/posturale.jpg</immagine>
         <intensita>bassa</intensita>
         <prezzo_crediti>45</prezzo_crediti>
         <disponibile>true</disponibile>
         <edizioni>
-            <edizione id_edizione="ED03_SARA" trainer="Sara Trainer" />
+            <edizione id_edizione="ED_03_A" trainer="Sara Trainer" giorni="Mer, Giov" orario="12:00" disponibile="true"/>
         </edizioni>
     </corso>
     <corso id="CRS04" categoria="lezione_privata">
         <titolo>Lezione Privata di Personal Training</titolo>
         <descrizione>Sessione individuale con un personal trainer per obiettivi specifici, allenamento personalizzato e monitoraggio dei progressi.</descrizione>
         <immagine>img/personal_trainer.jpg</immagine>
-        <intensita>variabile</intensita>
+        <intensita>bassa</intensita>
         <prezzo_crediti>80</prezzo_crediti>
         <disponibile>true</disponibile>
         <edizioni>
-            <edizione id_edizione="ED04_MARIO" trainer="Mario Trainer" />
-            <edizione id_edizione="ED04_LUISA" trainer="Luisa Trainer" />
+            <edizione id_edizione="ED_04_A" trainer="Mario Trainer" giorni="Lun" orario="18:00-19:30" disponibile="true"/>
+            <edizione id_edizione="ED_04_B" trainer="Luisa Trainer" giorni="Mer" orario="18:00-19:30" disponibile="true"/>
         </edizioni>
     </corso>
 </catalogo>

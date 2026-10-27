@@ -5,7 +5,9 @@
 <!ELEMENT tipo (#PCDATA)>
 <!ELEMENT valore (#PCDATA)>
 <!ELEMENT criterio_applicazione (#PCDATA)>
-<!ATTLIST criterio_applicazione tipo_criterio (anzianita | spesa_pregressa | reputazione | indiscriminato) #REQUIRED>
+<!ATTLIST criterio_applicazione 
+    tipo_criterio (anzianita | spesa_pregressa | reputazione | indiscriminato) #REQUIRED
+    soglia CDATA #IMPLIED>
 <!ELEMENT data_inizio (#PCDATA)>
 <!ELEMENT data_fine (#PCDATA)>
 <!ELEMENT corsi_applicati (id_corso+)>

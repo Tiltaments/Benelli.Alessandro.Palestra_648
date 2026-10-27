@@ -9,8 +9,11 @@
 <!ELEMENT intensita (#PCDATA)>
 <!ELEMENT prezzo_crediti (#PCDATA)>
 <!ELEMENT disponibile (#PCDATA)>
-<!ELEMENT edizioni (edizione+)>
+<!ELEMENT edizioni (edizione*)>
 <!ELEMENT edizione EMPTY>
 <!ATTLIST edizione 
     id_edizione ID #REQUIRED
-    trainer CDATA #REQUIRED>
+    trainer CDATA #REQUIRED
+    giorni CDATA #IMPLIED
+    orario CDATA #IMPLIED
+    disponibile (true | false) "true">
