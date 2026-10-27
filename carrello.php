@@ -1,12 +1,32 @@
 <?php
 // carrello.php - Pannello Carrello Cliente
 require_once __DIR__ . '/includes/auth.php';
-require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/catalogo_service.php';
 
 richiediRuolo(['cliente']);
 $messaggio = '';
 $errore = '';
+
+// Helper per aggiornare il cookie del carrello usando una stringa separata da virgole (no JSON)
+function aggiornaCookieCarrello(array $carrello): void
+{
+    $stringaCarrello = implode(',', array_filter($carrello));
+    setcookie('carrello_persistente', $stringaCarrello, [
+        'expires' => time() + (86400 * 30),
+        'path' => '/',
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
+}
+
+// 0. RIPRISTINO DA COOKIE (Se la sessione è vuota ma esiste il cookie salvato)
+if (empty($_SESSION['carrello']) && !empty($_COOKIE['carrello_persistente'])) {
+    $ids = explode(',', $_COOKIE['carrello_persistente']);
+    $carrelloSalvato = array_filter(array_map('trim', $ids));
+    if (!empty($carrelloSalvato)) {
+        $_SESSION['carrello'] = array_values($carrelloSalvato);
+    }
+}
 
 if (!isset($_SESSION['carrello']) || !is_array($_SESSION['carrello'])) {
     $_SESSION['carrello'] = [];
@@ -15,11 +35,12 @@ if (!isset($_SESSION['carrello']) || !is_array($_SESSION['carrello'])) {
 // Recupera l'ID del cliente loggato
 $idCliente = $_SESSION['user']['id'] ?? $_SESSION['user_id'] ?? $_SESSION['utente_id'] ?? $_SESSION['id_cliente'] ?? null;
 
-// 1. GESTIONE AGGIUNTA CORSO AL CARRELLO (via POST da dettaglio_corso.php o catalogo)
+// 1. GESTIONE AGGIUNTA CORSO AL CARRELLO (via POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_corso_aggiungi'])) {
     $idCorso = $_POST['id_corso_aggiungi'];
     if (!in_array($idCorso, $_SESSION['carrello'])) {
         $_SESSION['carrello'][] = $idCorso;
+        aggiornaCookieCarrello($_SESSION['carrello']);
         $messaggio = "Corso aggiunto al carrello con successo!";
     } else {
         $errore = "Il corso è già presente nel tuo carrello.";
@@ -33,6 +54,7 @@ if (isset($_GET['rimuovi'])) {
     if ($key !== false) {
         unset($_SESSION['carrello'][$key]);
         $_SESSION['carrello'] = array_values($_SESSION['carrello']);
+        aggiornaCookieCarrello($_SESSION['carrello']);
         $messaggio = "Corso rimosso dal carrello.";
     }
 }
@@ -42,7 +64,7 @@ $corsiNelCarrello = [];
 $totaleCrediti = 0;
 
 foreach ($_SESSION['carrello'] as $idCorso) {
-    $corso = caricaCorsoPerId($idCorso);
+    $corso = caricaCorsoPerId($idCorso, $idCliente);
     if ($corso) {
         $corsiNelCarrello[] = $corso;
         $totaleCrediti += $corso['prezzo_finale'];
@@ -75,13 +97,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkout'])) {
                 if ($saldoAttuale < $totaleCrediti) {
                     $errore = "Crediti insufficienti. Il totale dell'ordine è di $totaleCrediti crediti, ma il tuo saldo attuale è di $saldoAttuale crediti.";
                 } else {
-                    // Calcolo eventuale bonus crediti complessivo guadagnato con l'ordine
+                    // Calcolo eventuale bonus crediti complessivo
                     $totaleBonusOttenuto = 0;
                     foreach ($corsiNelCarrello as $c) {
                         $totaleBonusOttenuto += (int)($c['bonus_crediti'] ?? 0);
                     }
 
-                    // Scalo crediti per il pagamento e accredito immediato del bonus promozionale
+                    // Scalo crediti per il pagamento e accredito bonus
                     $conto->saldo_crediti = $saldoAttuale - $totaleCrediti + $totaleBonusOttenuto;
                     $totaleSpesoAttuale = (float)$conto->totale_speso;
                     $conto->totale_speso = $totaleSpesoAttuale + $totaleCrediti;
@@ -92,7 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkout'])) {
                         $nuovoOrdine->addAttribute('id_ordine', 'ORD' . round(microtime(true) * 1000) . mt_rand(10, 99));
                         $nuovoOrdine->addAttribute('id_cliente', (string)$idCliente);
 
-                        // Figli secondo transazioni.dtd: (id_corso, crediti_pagati, bonus_ottenuto, indirizzo_fatturazione, data_ordine)
                         $nuovoOrdine->addChild('id_corso', $c['id']);
                         $nuovoOrdine->addChild('crediti_pagati', (string)$c['prezzo_finale']);
                         $nuovoOrdine->addChild('bonus_ottenuto', (string)($c['bonus_crediti'] ?? '0'));
@@ -103,8 +124,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkout'])) {
                     // Salva sul file XML
                     $xmlTransazioni->asXML($transazioniFile);
 
-                    // Svuota carrello
+                    // Svuota carrello in sessione e azzera il cookie
                     $_SESSION['carrello'] = [];
+                    aggiornaCookieCarrello([]);
                     $corsiNelCarrello = [];
                     $totaleCrediti = 0;
 
@@ -118,6 +140,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkout'])) {
         }
     }
 }
+
+// INCLUSIONE HEADER DOPO LA LOGICA DEI COOKIE E DEI REINDIRIZZAMENTI
+require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="card">
