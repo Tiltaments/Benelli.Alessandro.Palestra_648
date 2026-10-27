@@ -3,14 +3,38 @@
 <archivio_faq>
   <faq id="FAQ01" provenienza="manuale">
     <domanda>Quali documenti servono per iscriversi in palestra?</domanda>
-    <risposta>È obbligatorio presentare un certificato medico per attività sportiva non agonistica in corso di validità e il codice fiscale.</risposta>
+    <etichetta_corso>Generale</etichetta_corso>
+    <risposta>&#200; obbligatorio presentare un certificato medico per attivit&#224; sportiva non agonistica in corso di validit&#224; e il codice fiscale.</risposta>
     <autore_inserimento>gestore</autore_inserimento>
     <data_pubblicazione>2026-08-01</data_pubblicazione>
   </faq>
-  <faq id="FAQ1787598788" provenienza="manuale">
-    <domanda>Cosa è incluso negli abbonamenti?</domanda>
-    <risposta>Negli abbonamenti e nei corsi è incluso anche un asciugamano brandizzato e la possibilità di utilizzare un armadietto personale</risposta>
+  <faq id="FAQ02" provenienza="manuale">
+    <domanda>Cosa &#232; incluso negli abbonamenti?</domanda>
+    <etichetta_corso>Abbonamento Open Sala Pesi 3 Mesi</etichetta_corso>
+    <risposta>Negli abbonamenti e nei corsi &#232; incluso anche un asciugamano brandizzato e la possibilit&#224; di utilizzare un armadietto personale con lucchetto.</risposta>
     <autore_inserimento>admin</autore_inserimento>
     <data_pubblicazione>2026-08-24</data_pubblicazione>
+  </faq>
+  <faq id="FAQ03" provenienza="manuale">
+    <domanda>In che giorni e orari si svolgono le lezioni con Personal Trainer?</domanda>
+    <etichetta_corso>Lezione Privata di Personal Training</etichetta_corso>
+    <risposta>Le lezioni private individuali si concordano direttamente con il trainer assegnato, dal luned&#236; al venerd&#236; dalle 08:00 alle 21:00 e il sabato mattina.</risposta>
+    <autore_inserimento>gestore</autore_inserimento>
+    <data_pubblicazione>2026-09-01</data_pubblicazione>
+  </faq>
+  <faq id="FAQ04" provenienza="elevata">
+    <domanda>Il corso di calisthenics richiede prerequisiti di forza?</domanda>
+    <etichetta_corso>Corso Avanzato Calisthenics</etichetta_corso>
+    <risposta>Trattandosi del corso avanzato, &#232; consigliata una base di almeno 5 trazioni e 10 dip alle parallele. Per principianti &#232; disponibile il modulo base.</risposta>
+    <id_post_origine>P102</id_post_origine>
+    <autore_inserimento>admin</autore_inserimento>
+    <data_pubblicazione>2026-09-15</data_pubblicazione>
+  </faq>
+  <faq id="FAQ05" provenienza="manuale">
+    <domanda>Il corso di ginnastica posturale &#232; adatto a chi soffre di ernie?</domanda>
+    <etichetta_corso>Posturale &amp; Mobilit&#224; Articolare</etichetta_corso>
+    <risposta>S&#236;, gli esercizi sono a basso impatto e mirano al decompensamento vertebrale. Si consiglia comunque di mostrare il referto medico al trainer prima di iniziare.</risposta>
+    <autore_inserimento>gestore</autore_inserimento>
+    <data_pubblicazione>2026-09-20</data_pubblicazione>
   </faq>
 </archivio_faq>

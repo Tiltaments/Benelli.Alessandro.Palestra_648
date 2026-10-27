@@ -1,5 +1,5 @@
 <!ELEMENT archivio_faq (faq*)>
-<!ELEMENT faq (domanda, risposta, etichetta_corso?, id_post_origine?, autore_inserimento, data_pubblicazione)>
+<!ELEMENT faq (domanda, etichetta_corso?, risposta, id_post_origine?, autore_inserimento, data_pubblicazione)>
 <!ATTLIST faq 
     id ID #REQUIRED
     provenienza (manuale | elevata) #REQUIRED>

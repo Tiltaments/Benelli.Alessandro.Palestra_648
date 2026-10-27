@@ -1,3 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE community SYSTEM "community.dtd">
-<community/>
+<community>
+  <contributo id_post="P101" id_corso="CRS01" tipo="recensione" acquisto_verificato="true">
+    <id_autore>5</id_autore>
+    <data_creazione>2026-10-20T10:30:00</data_creazione>
+    <testo>Corso di Calisthenics intenso e ben strutturato. I progressi su anelli e sbarra si vedono gi&#224; dalle prime settimane grazie alle spiegazioni del trainer.</testo>
+    <valutazioni>
+      <valutazione id_votante="3" ruolo_votante="gestore">
+        <supporto>3</supporto>
+        <utilita>5</utilita>
+      </valutazione>
+      <valutazione id_votante="6" ruolo_votante="cliente">
+        <supporto>2</supporto>
+        <utilita>4</utilita>
+      </valutazione>
+    </valutazioni>
+  </contributo>
+
+  <contributo id_post="P102" id_corso="CRS03" tipo="recensione" acquisto_verificato="true">
+    <id_autore>6</id_autore>
+    <data_creazione>2026-10-22T15:45:00</data_creazione>
+    <testo>Ottimo corso per chi lavora al computer e soffre di dolori cervicali. Sara Trainer &#232; attentissima alle posture corrette.</testo>
+    <valutazioni>
+      <valutazione id_votante="3" ruolo_votante="gestore">
+        <supporto>3</supporto>
+        <utilita>5</utilita>
+      </valutazione>
+    </valutazioni>
+  </contributo>
+
+  <contributo id_post="P103" id_corso="CRS04" tipo="domanda" acquisto_verificato="false">
+    <id_autore>7</id_autore>
+    <data_creazione>2026-10-24T18:20:00</data_creazione>
+    <testo>La scheda di allenamento personalizzata &#232; inclusa nel pacchetto della singola lezione o va pagata a parte?</testo>
+    <risposte>
+      <risposta id_risposta="R201">
+        <id_autore>3</id_autore>
+        <data_creazione>2026-10-24T19:00:00</data_creazione>
+        <testo>La scheda iniziale e il monitoraggio dei parametri corporei sono compresi nella prima sessione individuale.</testo>
+      </risposta>
+    </risposte>
+  </contributo>
+
+  <contributo id_post="P104" id_corso="generale" tipo="domanda" acquisto_verificato="false">
+    <id_autore>5</id_autore>
+    <data_creazione>2026-10-25T11:00:00</data_creazione>
+    <testo>Consigli per il recupero muscolare post-allenamento ad alta intensit&#224;? Quanto incidono idratazione e sonno?</testo>
+    <valutazioni>
+      <valutazione id_votante="7" ruolo_votante="cliente">
+        <supporto>3</supporto>
+        <utilita>4</utilita>
+      </valutazione>
+    </valutazioni>
+    <risposte>
+      <risposta id_risposta="R202">
+        <id_autore>3</id_autore>
+        <data_creazione>2026-10-25T12:30:00</data_creazione>
+        <testo>Il sonno &#232; fondamentale: almeno 7-8 ore garantiscono il picco di ormone della crescita per la rigenerazione delle fibre.</testo>
+      </risposta>
+    </risposte>
+  </contributo>
+</community>
