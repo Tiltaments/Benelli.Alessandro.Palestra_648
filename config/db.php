@@ -1,20 +1,19 @@
 <?php
-// config/db.php - Configurazione della connessione al database per la Palestra 648
-$host = '127.0.0.1';
-$db   = 'palestra648';
-$user = 'root';
-$pass = '';
+// config/db.php - Connessione centralizzata al database MySQL tramite PDO
+require_once __DIR__ . '/../dati_generali.php';
+
+// Estrazione flessibile delle credenziali da dati_generali.php
+$host = $db_host ?? 'localhost';
+$db   = $db_name ?? 'palestra648';
+$user = $db_user ??  'root';
+$pass = $db_pass ?? '';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Solleva eccezioni in caso di errore
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // Restituisce array associativi
-    PDO::ATTR_EMULATE_PREPARES   => false,                  // Usa vere query preparate
-];
 
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    $pdo = new PDO($dsn, $user, $pass);
 } catch (\PDOException $e) {
-    die("Errore di connessione al database: " . $e->getMessage());
+    die("Errore di connessione al database: " . $e->getMessage() .
+        "<br><small>Verifica i parametri nel file <code>dati_generali.php</code> ed esegui prima lo script <code>install.php</code>.</small>");
 }
