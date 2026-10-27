@@ -1,0 +1,19 @@
+<!ELEMENT catalogo (corso*)>
+<!ELEMENT corso (titolo, descrizione, immagine, intensita, prezzo_crediti, disponibile, edizioni)>
+<!ATTLIST corso 
+    id ID #REQUIRED
+    categoria (corso | abbonamento | lezione_privata) #REQUIRED>
+<!ELEMENT titolo (#PCDATA)>
+<!ELEMENT descrizione (#PCDATA)>
+<!ELEMENT immagine (#PCDATA)>
+<!ELEMENT intensita (#PCDATA)>
+<!ELEMENT prezzo_crediti (#PCDATA)>
+<!ELEMENT disponibile (#PCDATA)>
+<!ELEMENT edizioni (edizione*)>
+<!ELEMENT edizione EMPTY>
+<!ATTLIST edizione 
+    id_edizione ID #REQUIRED
+    trainer CDATA #REQUIRED
+    giorni CDATA #IMPLIED
+    orario CDATA #IMPLIED
+    disponibile (true | false) "true">
