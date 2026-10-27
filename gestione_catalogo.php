@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $xpath = new DOMXPath($dom);
                     $corso = $xpath->query("//corso[@id='$idCorso']")->item(0);
 
-                    if ($corso) {
+                    if (isset($corso)) {
                         $corso->setAttribute('categoria', $categoria);
                         $corso->getElementsByTagName('titolo')->item(0)->nodeValue = htmlspecialchars($titolo);
                         $corso->getElementsByTagName('descrizione')->item(0)->nodeValue = htmlspecialchars($descrizione);

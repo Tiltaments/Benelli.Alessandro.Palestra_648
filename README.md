@@ -12,9 +12,7 @@ Progetto di esame per il corso di **Linguaggi per il Web**.
 
 - https://github.com/Tiltaments/Benelli.Alessandro.Palestra_648.git
 
-**Descrizione dell'applicazione:**
-
-L'applicazione è un sistema informativo ed e-commerce orientato alla gestione di abbonamenti, corsi sportivi, lezioni con personal trainer e servizi per il benessere fisico.
+**Descrizione dell'applicazione:** L'applicazione è un sistema informativo ed e-commerce orientato alla gestione di abbonamenti, corsi sportivi, lezioni con personal trainer e servizi per il benessere fisico.
 
 ---
 
@@ -66,7 +64,7 @@ Il codice segue un pattern procedurale modulare, suddiviso per responsabilità:
 2. Avvia **MySQL** dal pannello di controllo di XAMPP.
 3. Importa il database eseguendo lo script SQL presente nel file `install.php` (puoi usare phpMyAdmin all'indirizzo `http://localhost/phpmyadmin/`).
 4. Assicurati che i file XML all'interno della cartella `/data/` (`catalogo.xml`, `promozioni.xml`, `transazioni.xml`, `community.xml`, `faq.xml`) abbiano i permessi di scrittura attivi.
-5. Apri il browser all'indirizzo: `http://localhost/palestra648/index.php`
+5. Apri il browser all'indirizzo: `http://localhost/palestra648/index.php` o qualsiasi sia il nome del tuo progetto.
 
 ---
 
@@ -74,6 +72,12 @@ Il codice segue un pattern procedurale modulare, suddiviso per responsabilità:
 
 Puoi accedere subito utilizzando le seguenti utenze (Password per tutti: `Password123!`):
 
-- **Amministratore (Admin):** `admin` (Gestione utenti, ban, approvazione crediti)
-- **Gestore:** `gestore` (Gestione catalogo, sconti, moderazione community, FAQ)
-- **Cliente:** `cliente1` (Acquisti, carrello, recensioni, richieste crediti)
+- **Admin Supremo:** `admin` (Gestione utenti, ban, approvazione crediti)
+- **Admin (Ordinario):** `admin2` (Gestione utenti, ban, approvazione crediti)
+- **Gestore 1:** `gestore` (Gestione catalogo, sconti, moderazione community, FAQ)
+- **Gestore 2:** `gestore2` (Gestione catalogo, sconti, moderazione community, FAQ)
+- **Cliente 1:** `cliente1` (Acquisti, carrello, recensioni, richieste crediti)
+- **Cliente 2:** `cliente2` (Acquisti, carrello, recensioni, richieste crediti)
+- **Cliente 3:** `cliente3` (Acquisti, carrello, recensioni, richieste crediti)
+- **Cliente 4: (Bannato)** `cliente4`  (Acquisti, carrello, recensioni, richieste crediti)
+- **Visitatore:** (Solo visualizzazione, senza accesso a funzioni specifiche)
