@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sistema_transazioni SYSTEM "transazioni.dtd">
+<sistema_transazioni>
+  <conti_clienti>
+    <conto id_cliente="5">
+      <saldo_crediti>100</saldo_crediti>
+      <totale_speso>105</totale_speso>
+    </conto>
+    <conto id_cliente="6">
+      <saldo_crediti>150</saldo_crediti>
+      <totale_speso>45</totale_speso>
+    </conto>
+    <conto id_cliente="7">
+      <saldo_crediti>40</saldo_crediti>
+      <totale_speso>0</totale_speso>
+    </conto>
+  </conti_clienti>
+  <richieste_ricarica>
+    <richiesta id_richiesta="RIC1792600101" id_cliente="7" stato="in_attesa">
+      <crediti_richiesti>50</crediti_richiesti>
+      <data_richiesta>2026-10-27T08:30:00</data_richiesta>
+    </richiesta>
+    <richiesta id_richiesta="RIC1792600100" id_cliente="5" stato="approvata">
+      <crediti_richiesti>100</crediti_richiesti>
+      <data_richiesta>2026-10-18T14:10:00</data_richiesta>
+      <data_gestione>2026-10-18T14:15:00</data_gestione>
+    </richiesta>
+  </richieste_ricarica>
+  <ordini>
+    <ordine id_ordine="ORD1792600001" id_cliente="5">
+      <id_corso>CRS01</id_corso>
+      <crediti_pagati>60</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Appia 12, Priverno</indirizzo_fatturazione>
+      <data_ordine>2026-10-19T10:00:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600002" id_cliente="5">
+      <id_corso>CRS03</id_corso>
+      <crediti_pagati>45</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Appia 12, Priverno</indirizzo_fatturazione>
+      <data_ordine>2026-10-20T16:00:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600003" id_cliente="6">
+      <id_corso>CRS03</id_corso>
+      <crediti_pagati>45</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Cavour 22, Latina</indirizzo_fatturazione>
+      <data_ordine>2026-10-21T18:30:00</data_ordine>
+    </ordine>
+  </ordini>
+</sistema_transazioni>
