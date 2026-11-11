@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sistema_transazioni SYSTEM "transazioni.dtd">
+<sistema_transazioni>
+  <conti_clienti>
+    <conto id_cliente="5">
+      <saldo_crediti>49</saldo_crediti>
+      <totale_speso>156</totale_speso>
+    </conto>
+    <conto id_cliente="6">
+      <saldo_crediti>150</saldo_crediti>
+      <totale_speso>45</totale_speso>
+    </conto>
+    <conto id_cliente="7">
+      <saldo_crediti>40</saldo_crediti>
+      <totale_speso>0</totale_speso>
+    </conto>
+    <conto id_cliente="8">
+      <saldo_crediti>0</saldo_crediti>
+      <totale_speso>0</totale_speso>
+    </conto>
+    <conto id_cliente="9">
+      <saldo_crediti>80</saldo_crediti>
+      <totale_speso>120</totale_speso>
+    </conto>
+    <conto id_cliente="10">
+      <saldo_crediti>20</saldo_crediti>
+      <totale_speso>60</totale_speso>
+    </conto>
+    <conto id_cliente="11">
+      <saldo_crediti>110</saldo_crediti>
+      <totale_speso>45</totale_speso>
+    </conto>
+    <conto id_cliente="12">
+      <saldo_crediti>15</saldo_crediti>
+      <totale_speso>160</totale_speso>
+    </conto>
+    <conto id_cliente="13">
+      <saldo_crediti>95</saldo_crediti>
+      <totale_speso>45</totale_speso>
+    </conto>
+    <conto id_cliente="14">
+      <saldo_crediti>0</saldo_crediti>
+      <totale_speso>120</totale_speso>
+    </conto>
+    <conto id_cliente="15">
+      <saldo_crediti>70</saldo_crediti>
+      <totale_speso>80</totale_speso>
+    </conto>
+    <conto id_cliente="16">
+      <saldo_crediti>30</saldo_crediti>
+      <totale_speso>60</totale_speso>
+    </conto>
+    <conto id_cliente="17">
+      <saldo_crediti>105</saldo_crediti>
+      <totale_speso>45</totale_speso>
+    </conto>
+    <conto id_cliente="18">
+      <saldo_crediti>0</saldo_crediti>
+      <totale_speso>0</totale_speso>
+    </conto>
+    <conto id_cliente="19">
+      <saldo_crediti>25</saldo_crediti>
+      <totale_speso>120</totale_speso>
+    </conto>
+    <conto id_cliente="20">
+      <saldo_crediti>85</saldo_crediti>
+      <totale_speso>80</totale_speso>
+    </conto>
+    <conto id_cliente="21">
+      <saldo_crediti>40</saldo_crediti>
+      <totale_speso>45</totale_speso>
+    </conto>
+    <conto id_cliente="22">
+      <saldo_crediti>0</saldo_crediti>
+      <totale_speso>0</totale_speso>
+    </conto>
+    <conto id_cliente="23">
+      <saldo_crediti>60</saldo_crediti>
+      <totale_speso>60</totale_speso>
+    </conto>
+    <conto id_cliente="24">
+      <saldo_crediti>120</saldo_crediti>
+      <totale_speso>0</totale_speso>
+    </conto>
+    <conto id_cliente="25">
+      <saldo_crediti>15</saldo_crediti>
+      <totale_speso>45</totale_speso>
+    </conto>
+    <conto id_cliente="26">
+      <saldo_crediti>90</saldo_crediti>
+      <totale_speso>120</totale_speso>
+    </conto>
+    <conto id_cliente="27">
+      <saldo_crediti>50</saldo_crediti>
+      <totale_speso>0</totale_speso>
+    </conto>
+    <conto id_cliente="28">
+      <saldo_crediti>10</saldo_crediti>
+      <totale_speso>80</totale_speso>
+    </conto>
+    <conto id_cliente="29">
+      <saldo_crediti>100</saldo_crediti>
+      <totale_speso>0.00</totale_speso>
+    </conto>
+  </conti_clienti>
+  <richieste_ricarica>
+    <richiesta id_richiesta="RIC1792600100" id_cliente="5" stato="approvata">
+      <crediti_richiesti>100</crediti_richiesti>
+      <data_richiesta>2026-10-18T14:10:00</data_richiesta>
+      <data_gestione>2026-10-18T14:15:00</data_gestione>
+    </richiesta>
+    <richiesta id_richiesta="RIC1792600101" id_cliente="7" stato="in_attesa">
+      <crediti_richiesti>50</crediti_richiesti>
+      <data_richiesta>2026-10-27T08:30:00</data_richiesta>
+    </richiesta>
+    <richiesta id_richiesta="RIC1792600102" id_cliente="9" stato="approvata">
+      <crediti_richiesti>200</crediti_richiesti>
+      <data_richiesta>2026-09-01T10:00:00</data_richiesta>
+      <data_gestione>2026-09-01T10:30:00</data_gestione>
+    </richiesta>
+    <richiesta id_richiesta="RIC1792600103" id_cliente="12" stato="approvata">
+      <crediti_richiesti>150</crediti_richiesti>
+      <data_richiesta>2026-08-15T11:00:00</data_richiesta>
+      <data_gestione>2026-08-15T11:20:00</data_gestione>
+    </richiesta>
+    <richiesta id_richiesta="RIC1792600104" id_cliente="14" stato="approvata">
+      <crediti_richiesti>120</crediti_richiesti>
+      <data_richiesta>2026-09-10T16:00:00</data_richiesta>
+      <data_gestione>2026-09-10T16:05:00</data_gestione>
+    </richiesta>
+    <richiesta id_richiesta="RIC1792600105" id_cliente="20" stato="in_attesa">
+      <crediti_richiesti>100</crediti_richiesti>
+      <data_richiesta>2026-11-08T09:15:00</data_richiesta>
+    </richiesta>
+    <richiesta id_richiesta="RIC1792600106" id_cliente="24" stato="respinta">
+      <crediti_richiesti>300</crediti_richiesti>
+      <data_richiesta>2026-11-02T14:00:00</data_richiesta>
+      <data_gestione>2026-11-02T15:00:00</data_gestione>
+    </richiesta>
+  <richiesta id_richiesta="RIC1794305965" id_cliente="29" stato="approvata"><crediti_richiesti>100</crediti_richiesti><data_richiesta>2026-11-10T11:19:25</data_richiesta><data_gestione>2026-11-10T11:19:37</data_gestione></richiesta></richieste_ricarica>
+  <ordini>
+    <ordine id_ordine="ORD1792600001" id_cliente="5">
+      <id_corso>CRS01</id_corso>
+      <crediti_pagati>60</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Appia 12, Priverno</indirizzo_fatturazione>
+      <data_ordine>2026-10-19T10:00:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600002" id_cliente="5">
+      <id_corso>CRS03</id_corso>
+      <crediti_pagati>45</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Appia 12, Priverno</indirizzo_fatturazione>
+      <data_ordine>2026-10-20T16:00:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600003" id_cliente="6">
+      <id_corso>CRS03</id_corso>
+      <crediti_pagati>45</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Cavour 22, Latina</indirizzo_fatturazione>
+      <data_ordine>2026-10-21T18:30:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600004" id_cliente="9">
+      <id_corso>CRS02</id_corso>
+      <crediti_pagati>120</crediti_pagati>
+      <bonus_ottenuto>25</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Roma 15, Latina</indirizzo_fatturazione>
+      <data_ordine>2026-09-05T11:00:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600005" id_cliente="10">
+      <id_corso>CRS01</id_corso>
+      <crediti_pagati>60</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Corso della Repubblica 4, Latina</indirizzo_fatturazione>
+      <data_ordine>2026-09-18T14:30:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600006" id_cliente="12">
+      <id_corso>CRS04</id_corso>
+      <crediti_pagati>80</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Torino 45, Sezze</indirizzo_fatturazione>
+      <data_ordine>2026-08-20T09:00:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600007" id_cliente="12">
+      <id_corso>CRS04</id_corso>
+      <crediti_pagati>80</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Torino 45, Sezze</indirizzo_fatturazione>
+      <data_ordine>2026-09-02T10:00:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600008" id_cliente="14">
+      <id_corso>CRS02</id_corso>
+      <crediti_pagati>120</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Firenze 33, Terracina</indirizzo_fatturazione>
+      <data_ordine>2026-09-12T17:00:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600009" id_cliente="15">
+      <id_corso>CRS04</id_corso>
+      <crediti_pagati>80</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Bologna 9, Latina</indirizzo_fatturazione>
+      <data_ordine>2026-09-25T15:15:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600010" id_cliente="19">
+      <id_corso>CRS02</id_corso>
+      <crediti_pagati>120</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Trieste 5, Terracina</indirizzo_fatturazione>
+      <data_ordine>2026-10-02T12:00:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600011" id_cliente="20">
+      <id_corso>CRS04</id_corso>
+      <crediti_pagati>80</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Dante 11, Priverno</indirizzo_fatturazione>
+      <data_ordine>2026-10-10T16:45:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD1792600012" id_cliente="26">
+      <id_corso>CRS02</id_corso>
+      <crediti_pagati>120</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Via Calvino 29, Latina</indirizzo_fatturazione>
+      <data_ordine>2026-11-02T11:20:00</data_ordine>
+    </ordine>
+    <ordine id_ordine="ORD179425604579791" id_cliente="5">
+      <id_corso>CRS01</id_corso>
+      <crediti_pagati>51</crediti_pagati>
+      <bonus_ottenuto>0</bonus_ottenuto>
+      <indirizzo_fatturazione>Sede Palestra</indirizzo_fatturazione>
+      <data_ordine>2026-11-09T21:27:25</data_ordine>
+    </ordine>
+  </ordini>
+</sistema_transazioni>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE archivio_faq SYSTEM "faq.dtd">
+<archivio_faq>
+  <faq id="FAQ01" provenienza="manuale">
+    <domanda>Quali documenti servono per iscriversi in palestra?</domanda>
+    <etichetta_corso>Generale</etichetta_corso>
+    <risposta>È obbligatorio presentare un certificato medico per attività sportiva non agonistica in corso di validità e il codice fiscale.</risposta>
+    <autore_inserimento>gestore</autore_inserimento>
+    <data_pubblicazione>2026-08-01</data_pubblicazione>
+  </faq>
+  <faq id="FAQ02" provenienza="manuale">
+    <domanda>Cosa è incluso negli abbonamenti?</domanda>
+    <etichetta_corso>Abbonamento Open Sala Pesi 3 Mesi</etichetta_corso>
+    <risposta>Negli abbonamenti e nei corsi è incluso anche un asciugamano brandizzato e la possibilità di utilizzare un armadietto personale con lucchetto.</risposta>
+    <autore_inserimento>admin</autore_inserimento>
+    <data_pubblicazione>2026-08-24</data_pubblicazione>
+  </faq>
+  <faq id="FAQ03" provenienza="manuale">
+    <domanda>In che giorni e orari si svolgono le lezioni con Personal Trainer?</domanda>
+    <etichetta_corso>Lezione Privata di Personal Training</etichetta_corso>
+    <risposta>Le lezioni private individuali si concordano direttamente con il trainer assegnato, dal lunedì al venerdì dalle 08:00 alle 21:00 e il sabato mattina.</risposta>
+    <autore_inserimento>gestore</autore_inserimento>
+    <data_pubblicazione>2026-09-01</data_pubblicazione>
+  </faq>
+  <faq id="FAQ04" provenienza="elevata">
+    <domanda>Il corso di calisthenics richiede prerequisiti di forza?</domanda>
+    <etichetta_corso>Corso Avanzato Calisthenics</etichetta_corso>
+    <risposta>Trattandosi del corso avanzato, è consigliata una base di almeno 5 trazioni e 10 dip alle parallele. Per principianti è disponibile il modulo base.</risposta>
+    <id_post_origine>P102</id_post_origine>
+    <autore_inserimento>admin</autore_inserimento>
+    <data_pubblicazione>2026-09-15</data_pubblicazione>
+  </faq>
+  <faq id="FAQ05" provenienza="manuale">
+    <domanda>Il corso di ginnastica posturale è adatto a chi soffre di ernie?</domanda>
+    <etichetta_corso>Posturale &amp; Mobilità Articolare</etichetta_corso>
+    <risposta>Sì, gli esercizi sono a basso impatto e mirano al decompensamento vertebrale. Si consiglia comunque di mostrare il referto medico al trainer prima di iniziare.</risposta>
+    <autore_inserimento>gestore</autore_inserimento>
+    <data_pubblicazione>2026-09-20</data_pubblicazione>
+  </faq>
+  <faq id="FAQ06" provenienza="elevata">
+    <domanda>È necessario portare un proprio tappetino per le lezioni di Posturale?</domanda>
+    <etichetta_corso>Posturale &amp; Mobilità Articolare</etichetta_corso>
+    <risposta>I tappetini sanificati sono sempre a disposizione in sala, ma è possibile portare il proprio se si preferisce.</risposta>
+    <id_post_origine>P108</id_post_origine>
+    <autore_inserimento>gestore2</autore_inserimento>
+    <data_pubblicazione>2026-11-04</data_pubblicazione>
+  </faq>
+  <faq id="FAQ1794254714" provenienza="elevata">
+    <domanda>La scheda di allenamento personalizzata è inclusa nel pacchetto della singola lezione o va pagata a parte?</domanda>
+    <etichetta_corso>Lezione Privata di Personal Training</etichetta_corso>
+    <risposta>La scheda iniziale e il monitoraggio dei parametri corporei sono compresi nella prima sessione individuale.</risposta>
+    <id_post_origine>P103</id_post_origine>
+    <autore_inserimento>admin</autore_inserimento>
+    <data_pubblicazione>2026-11-09</data_pubblicazione>
+  </faq>
+  <faq id="FAQ1794254732" provenienza="elevata">
+    <domanda>Consigli per il recupero muscolare post-allenamento ad alta intensità? Quanto incidono idratazione e sonno?</domanda>
+    <etichetta_corso>Forum Generale / Domande Comuni</etichetta_corso>
+    <risposta>Il sonno è fondamentale: almeno 7-8 ore garantiscono il picco di ormone della crescita per la rigenerazione delle fibre.</risposta>
+    <id_post_origine>P104</id_post_origine>
+    <autore_inserimento>admin</autore_inserimento>
+    <data_pubblicazione>2026-11-09</data_pubblicazione>
+  </faq>
+  <faq id="FAQ1794254734" provenienza="elevata">
+    <domanda>L'abbonamento open sala pesi comprende anche l'accesso alla zona docce e armadietti oppure c'è un costo a gettone?</domanda>
+    <etichetta_corso>Abbonamento Open Sala Pesi 3 Mesi</etichetta_corso>
+    <risposta>Nell'abbonamento è compreso anche l'accesso a docce e armadietti</risposta>
+    <id_post_origine>P105</id_post_origine>
+    <autore_inserimento>admin</autore_inserimento>
+    <data_pubblicazione>2026-11-09</data_pubblicazione>
+  </faq>
+  <faq id="FAQ1794259776" provenienza="elevata">
+    <domanda>Quante sessioni a settimana sono consigliate per non andare in sovrallenamento con il corso avanzato?</domanda>
+    <etichetta_corso>Corso Avanzato Calisthenics</etichetta_corso>
+    <risposta>Consigliamo 2 o 3 sessioni a settimana distanziate da almeno un giorno di riposo per permettere l'adattamento tendineo.</risposta>
+    <id_post_origine>P109</id_post_origine>
+    <autore_inserimento>admin</autore_inserimento>
+    <data_pubblicazione>2026-11-09</data_pubblicazione>
+  </faq>
+</archivio_faq>
